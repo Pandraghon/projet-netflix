@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,10 +28,13 @@ public class User {
 	private Long id;
 	
 	@NotNull
+	@Column(unique=true)
 	@Size(min=3, max=20)
 	private String username = null;
 	
+	@Email
 	@NotNull
+	@Column(unique=true)
 	@Size(min=5, max=50)
 	private String email = null;
 	
@@ -51,8 +57,18 @@ public class User {
 	)
 	private List<Media> wanted = new ArrayList<>();
 	
-	@OneToMany(mappedBy="user")
-	private List<Media> noted = new ArrayList<>();
+	/*@OneToMany(mappedBy="user")
+	private List<Note> noted = new ArrayList<>();*/
+	
+	public User() {
+		
+	}
+	
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
 
 	public Long getId() {
 		return id;
@@ -102,6 +118,12 @@ public class User {
 		this.created = created;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return String.format(
+				"User[id=%, username=%, email=%, created=%]",
+				id, username, email, created
+		);
+	}
 	
 }

@@ -1,4 +1,4 @@
-package models;
+/*package models;
 
 import java.io.Serializable;
 
@@ -30,3 +30,4 @@ public class NoteId implements Serializable {
 	}
 	
 }
+*/

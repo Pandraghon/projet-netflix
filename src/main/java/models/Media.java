@@ -20,7 +20,7 @@ public class Media {
 	@ManyToMany(mappedBy="wanted")
 	private List<User> wanters = new ArrayList<>();
 	
-	@OneToMany(mappedBy="media")
-	private List<Note> notes = new ArrayList<>();
+	/*@OneToMany(mappedBy="media")
+	private List<Note> notes = new ArrayList<>();*/
 	
 }
