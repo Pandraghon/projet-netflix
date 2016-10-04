@@ -22,8 +22,8 @@ public class Serie {
 	
 	
 	@OneToOne
-	@JoinColumn(name="media_id")
-	private Media media_id;
+	@JoinColumn(name="media_id", referencedColumnName="id")
+	private Media media;
 
 
 	public Long getId() {
@@ -36,14 +36,6 @@ public class Serie {
 	}
 
 
-	public Media getMedia_id() {
-		return media_id;
-	}
-
-
-	public void setMedia_id(Media media_id) {
-		this.media_id = media_id;
-	}
 
 
 	

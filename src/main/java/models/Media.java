@@ -13,12 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="medias")
 public class Media {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="media_id")
+	//@Column(name="media_id")
 	private long id;
 	
 	@ManyToMany(mappedBy="wanted")
