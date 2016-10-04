@@ -25,7 +25,6 @@ public class Episode {
 	
 	
 	@OneToOne
-	@JoinColumn(name="video_id")
-	private Long video_id;
+	private Video video;
 	
 }

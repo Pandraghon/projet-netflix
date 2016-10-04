@@ -19,7 +19,6 @@ public class Video {
 	
 	
 	@Id
-	@Column(name="video_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
