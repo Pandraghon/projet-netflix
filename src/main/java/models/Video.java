@@ -20,6 +20,7 @@ public class Video {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="video_id")
 	private Long id;
 	
 	@NotNull
@@ -60,6 +61,19 @@ public class Video {
 
 	public void setCreated(Calendar created) {
 		this.created = created;
+	}
+
+	public Video(Long id, Long duration, Blob content, Calendar created) {
+		super();
+		this.id = id;
+		this.duration = duration;
+		this.content = content;
+		this.created = created;
+	}
+
+	@Override
+	public String toString() {
+		return "Video [id=" + id + ", duration=" + duration + ", content=" + content + ", created=" + created + "]";
 	}
 
 	
