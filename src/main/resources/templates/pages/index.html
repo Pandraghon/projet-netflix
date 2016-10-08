@@ -13,6 +13,23 @@ and open the template in the editor.
         <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <header>
+            <h1>Webflix</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="">Movies</a></li>
+                    <li><a href="">TV Shows</a></li>
+                </ul>
+            </nav>
+            <nav id="secondary-nav">
+                <ul>
+                    <li><a href="">Bookmarks</a></li>
+                    <li><a th:href="@{users/login}">Log In</a></li>
+                    <li><a th:href="@{users/logout}">Log Out</a></li>
+                    <li><a th:href="@{users/signin}">Sign In</a></li>
+                </ul>
+            </nav>
+        </header>
         <div>TODO write content</div>
     </body>
 </html>
