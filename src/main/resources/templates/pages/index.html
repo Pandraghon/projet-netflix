@@ -6,33 +6,9 @@ and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- <link th:href="@{/css/font-awesome.css}" rel="stylesheet" type="text/css" /> -->
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
-        
-        <script src="https://use.fontawesome.com/6cf7a68c41.js"></script>
-    </head>
+    <head th:include="fragments/head :: head"></head>
     <body>
-        <header>
-            <h1>Webflix</h1>
-            <nav id="main-nav">
-                <ul>
-                    <li><a href="">Movies</a></li>
-                    <li><a href="">TV Shows</a></li>
-                </ul>
-            </nav>
-            <nav id="secondary-nav">
-                <ul>
-                    <li><a href=""><i class="fa fa-fw fa-heart" title="Bookmarks"></i></a></li>
-                    <li><a th:href="@{users/login}"><i class="fa fa-fw fa-sign-in" title="Sign In"></i></a></li>
-                    <li><a th:href="@{users/logout}"><i class="fa fa-fw fa-sign-out" title="Sign Out"></i></a></li>
-                    <li><a th:href="@{users/signup}"><i class="fa fa-fw fa-user-plus" title="Create Account"></i></a></li>
-                </ul>
-            </nav>
-        </header>
+        <header th:include="fragments/header :: header"></header>
         <div>TODO write content</div>
     </body>
 </html>
