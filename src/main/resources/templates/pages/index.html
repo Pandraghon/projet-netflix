@@ -6,30 +6,9 @@ and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
-    </head>
+    <head th:include="fragments/head :: head"></head>
     <body>
-        <header>
-            <h1>Webflix</h1>
-            <nav id="main-nav">
-                <ul>
-                    <li><a href="">Movies</a></li>
-                    <li><a href="">TV Shows</a></li>
-                </ul>
-            </nav>
-            <nav id="secondary-nav">
-                <ul>
-                    <li><a href="">Bookmarks</a></li>
-                    <li><a th:href="@{users/login}">Log In</a></li>
-                    <li><a th:href="@{users/logout}">Log Out</a></li>
-                    <li><a th:href="@{users/signin}">Sign In</a></li>
-                </ul>
-            </nav>
-        </header>
+        <header th:include="fragments/header :: header"></header>
         <div>TODO write content</div>
     </body>
 </html>

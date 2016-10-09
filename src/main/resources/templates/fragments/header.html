@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head></head>
+    <body>
+        <header>
+            <h1>Webflix</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="">Movies</a></li>
+                    <li><a href="">TV Shows</a></li>
+                </ul>
+            </nav>
+            <nav id="secondary-nav">
+                <ul>
+                    <li><a href=""><i class="fa fa-fw fa-heart" title="Bookmarks"></i></a></li>
+                    <li><a th:href="@{users/login}"><i class="fa fa-fw fa-sign-in" title="Sign In"></i></a></li>
+                    <li><a th:href="@{users/logout}"><i class="fa fa-fw fa-sign-out" title="Sign Out"></i></a></li>
+                    <li><a th:href="@{users/signup}"><i class="fa fa-fw fa-user-plus" title="Create Account"></i></a></li>
+                </ul>
+            </nav>
+        </header>
+    </body>
+</html>
