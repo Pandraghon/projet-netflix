@@ -13,12 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-//<<<<<<< HEAD
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-//=======
 import javax.persistence.Table;
-//>>>>>>> branch 'master' of https://github.com/Akim0992/projet-netflix.git
 
 @Entity
 public class Media {

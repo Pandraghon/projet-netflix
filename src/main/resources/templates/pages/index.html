@@ -10,6 +10,7 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:href="@{/css/font-awesome.css}" rel="stylesheet" type="text/css" />
         <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -23,10 +24,10 @@ and open the template in the editor.
             </nav>
             <nav id="secondary-nav">
                 <ul>
-                    <li><a href="">Bookmarks</a></li>
-                    <li><a th:href="@{users/login}">Log In</a></li>
-                    <li><a th:href="@{users/logout}">Log Out</a></li>
-                    <li><a th:href="@{users/signin}">Sign In</a></li>
+                    <li><a href=""><i class="fa fa-fw fa-heart" title="Bookmarks"></i></a></li>
+                    <li><a th:href="@{users/login}"><i class="fa fa-fw fa-sign-in" title="Sign In"></i></a></li>
+                    <li><a th:href="@{users/logout}"><i class="fa fa-fw fa-sign-out" title="Sign Out"></i></a></li>
+                    <li><a th:href="@{users/signup}"><i class="fa fa-fw fa-user-plus" title="Create Account"></i></a></li>
                 </ul>
             </nav>
         </header>
