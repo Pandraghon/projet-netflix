@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import models.Film;
-import models.User;
 import repositories.FilmRepository;
-import repositories.UserRepository;
 
 @Controller
 @RequestMapping("/films")
@@ -41,12 +38,16 @@ public class FilmController {
 	}
 	
 	@GetMapping("/view/{id}")
-	public String viewFilm(Model model, @RequestParam("id") Long id) {		
+	public String viewFilm(Model model, @RequestParam("id") Long id) {
+		Film film = filmRep.findOne(id);
+		model.addAttribute(film);
 		return PAGE_VIEW;
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String editFilmForm(Model model, @RequestParam("id") Long id) {
+		Film film= filmRep.findOne(id);
+		model.addAttribute("film", film);
 		return PAGE_EDIT;
 	}
 	
@@ -57,13 +58,18 @@ public class FilmController {
 	
 	@GetMapping("create")
 	public String add(Model model) {
-		
+		model.addAttribute("film",new Film());
 		return PAGE_ADD;
 	}
 	
 	@PostMapping("/create")
 	public String add(Model model, @Valid Film film, BindingResult bindingResult) {
-		
+		if(bindingResult.hasErrors())
+		{
+			return "PAGE_ADD";
+		}
+		Film saveFilm = filmRep.save(film);
+		System.out.println("NEW SAVED FILM WITH ID : "+ saveFilm.getId());
 		return PAGE_ADD;
 	}
 	
@@ -71,6 +77,6 @@ public class FilmController {
 	public String deleteProduct(@PathVariable("id") Long id){
 		
 		filmRep.delete(id);
-		return "redirect:/";
+		return PAGE_DELETE;
 	}
 }
