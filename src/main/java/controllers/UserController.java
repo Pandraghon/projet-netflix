@@ -40,20 +40,24 @@ public class UserController {
 	
 	@GetMapping("/view/{id}")
 	public String view(Model model, @RequestParam("id") Long id) {
-		
+		User user = repository.findOne(id);
+		model.addAttribute(user);
 		return PAGE_VIEW;
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(Model model, @RequestParam("id") Long id) {
-		
+		User user = repository.findOne(id);
+		model.addAttribute(user);
 		return PAGE_EDIT;
 	}
 	
 	@PostMapping("/edit/{id}")
 	public String edit(Model model, @Valid User user, BindingResult bindingResult, @RequestParam("id") Long id) {
-		
-		return PAGE_EDIT;
+		if(bindingResult.hasErrors()) 	return PAGE_EDIT;
+		user.setId(id);
+		repository.save(user);
+		return String.format("redirect:/users/view/%1", id);
 	}
 	
 	@GetMapping("/signup")
