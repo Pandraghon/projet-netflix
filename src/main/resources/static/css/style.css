@@ -67,12 +67,43 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 body {
   background: black;
   color: white;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
-/* line 8, ../sass/style.scss */
+/* line 9, ../sass/style.scss */
 header {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
+  text-align: center;
+}
+/* line 12, ../sass/style.scss */
+header h1 {
+  display: inline-block;
+  font-family: 'Lobster', cursive;
+  font-size: 3em;
+}
+/* line 17, ../sass/style.scss */
+header h1 a {
+  color: white;
+  text-decoration: none;
+}
+/* line 20, ../sass/style.scss */
+header #main-nav {
+  float: left;
+}
+/* line 23, ../sass/style.scss */
+header #main-nav a {
+  color: wheat;
+  text-decoration: none;
+}
+/* line 26, ../sass/style.scss */
+header #secondary-nav {
+  float: right;
+}
+/* line 29, ../sass/style.scss */
+header #secondary-nav a {
+  color: gray;
+  text-decoration: none;
+}
+/* line 32, ../sass/style.scss */
+header li {
+  display: inline-block;
 }

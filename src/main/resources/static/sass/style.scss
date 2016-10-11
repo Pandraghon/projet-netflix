@@ -3,9 +3,33 @@
 body {
     background: black;
     color: white;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 header {
-    @include display-flex;
-    @include flex-direction(row); 
+    text-align: center;
+    
+    h1 {
+        display: inline-block;
+        font-family: 'Lobster', cursive;
+        font-size: 3em;
+        
+        a { color: white; text-decoration: none; }
+    }
+    
+    #main-nav {
+        float: left;
+        
+        a { color: wheat; text-decoration: none; }
+    }
+    
+    #secondary-nav {
+        float: right;
+        
+        a { color: gray; text-decoration: none; }
+    }
+    
+    li {
+        display: inline-block;
+    }
 }
