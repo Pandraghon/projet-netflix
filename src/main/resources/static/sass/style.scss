@@ -1,0 +1,11 @@
+@import "base";
+
+body {
+    background: black;
+    color: white;
+}
+
+header {
+    @include display-flex;
+    @include flex-direction(row); 
+}
