@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Series list</title>
+</head>
+<body>
+	
+<h1>Listes des Séries</h1>
+
+<a th:href="@{/series/add}">Ajouter une série</a>
+
+<div th:if="${#lists.isEmpty(serie)}">
+il n'existe pas de séries dans la base !!!</div>
+    <ul >
+    	<li th:each="serie : ${serie}" >
+    	
+	    	<span th:text="${serie.id}"></span> 
+	    	<span th:text="${serie.media.name}"></span> 
+	    	<span th:text="${serie.media.description}"></span>
+	    	<span th:text="${serie.media.trailer}"></span>
+		<a th:href="@{/edit/{id}(id=${serie.id})}">Editer</a>
+		<a th:href="@{/delete/{id}(id=${serie.id})}">Supprimer</a>
+    	</li>
+    </ul>
+    
+    <a th:href="@{/series}">Retour à l'index</a>
+</body>
+</html>
