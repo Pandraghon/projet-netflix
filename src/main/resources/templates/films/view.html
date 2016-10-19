@@ -5,8 +5,24 @@
     <body>
         <header th:include="fragments/header :: header"></header>
         <section id="main-container">
-            <article id="movie-container" class="container one-media-container">
-                <img class="movie-poster" th:src="@{img/test.jpg}" /> 
+            <article id="media-container" class="container">
+                <img class="media-poster" th:src="@{/img/test.jpg}" /> 
+                <div class="media-data">
+                    <h2 class="media-title">Elephant Dream</h2>
+                    <div class="movie-data">
+                        <span class="media-one-data">Fantastique</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i>2006</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-clock-o"></i>11 min</span>
+                        <span class="media-one-data">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </div>
+                    <p class="media-description">Emo and Proog are two men exploring a strange industrial world of the future.</p>
+                </div>
             </article>
         </section>
     </body>
