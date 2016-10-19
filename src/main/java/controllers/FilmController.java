@@ -2,6 +2,7 @@ package controllers;
 
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import models.Film;
 import repositories.FilmRepository;
@@ -38,21 +38,21 @@ public class FilmController {
 	}
 	
 	@GetMapping("/view/{id}")
-	public String viewFilm(Model model, @RequestParam("id") Long id) {
+	public String viewFilm(Model model, @PathParam("id") Long id) {
 		Film film = filmRep.findOne(id);
 		model.addAttribute(film);
 		return PAGE_VIEW;
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String editFilmForm(Model model, @RequestParam("id") Long id) {
+	public String editFilmForm(Model model, @PathParam("id") Long id) {
 		Film film= filmRep.findOne(id);
 		model.addAttribute("film", film);
 		return PAGE_EDIT;
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @RequestParam("id") Long id) {		
+	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathParam("id") Long id) {		
 		return PAGE_EDIT;
 	}
 	
