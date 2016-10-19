@@ -22,7 +22,7 @@ public class FilmController {
 
 	private final String SUBFOLDER 		= "films/";
 	
-	private final String PAGE_LIST 	= SUBFOLDER + "list";
+	private final String PAGE_LIST 	= SUBFOLDER + "index";
 	private final String PAGE_VIEW 	= SUBFOLDER + "view";
 	private final String PAGE_EDIT 	= SUBFOLDER + "edit";
 	private final String PAGE_ADD 	= SUBFOLDER + "add";
