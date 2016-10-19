@@ -34,14 +34,25 @@ public class Media {
 	@NotNull
 	private String name;
 	
-	@NotNull
+	
 	private Date date;
 	private String description;
 	private String trailer;
 	private Blob image;
 	
 	
-	public Long getId() {
+	public Media() {
+		super();
+	}
+	public Media(String name, Date date, String description, String trailer, Blob image) {
+		super();
+		this.name = name;
+		this.date = date;
+		this.description = description;
+		this.trailer = trailer;
+		this.image = image;
+	}
+	public long getId() {
 		return id;
 	}
 	public void setId(Long id) {
