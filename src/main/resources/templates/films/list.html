@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Liste des films</title>
+</head>
+<body>
+<h1>Listes des films</h1>
+
+	
+<a th:href="@{/create}">Ajouter</a>
+
+<div th:if="${#lists.isEmpty(film)}">
+Il n'existe pas de films dans la base !!!</div>
+    <ul>
+    	<li th:each="film : ${film}"><span th:text="${film.name}"></span> 
+		
+		
+		<a th:href="@{/edit/{id}(id=${film.id})}">Editer</a>
+		<a th:href="@{/delete/{id}(id=${filmid})}">Supprimer</a>
+    	<a th:href="@{/view/{id}(id=${filmid})}">Voir</a>
+    	</li>
+    </ul>
+</body>
+</html>

@@ -33,7 +33,7 @@ public class FilmController {
 	
 	@GetMapping({"", "/"})
 	public String listFilms(Model model) {
-		model.addAttribute("films", (Iterable<Film>) filmRep.findAll());
+		model.addAttribute("film", (Iterable<Film>) filmRep.findAll());
 		return PAGE_LIST;
 	}
 	
@@ -73,7 +73,7 @@ public class FilmController {
 		return PAGE_ADD;
 	}
 	
-	@GetMapping("/delete/{id}")//on se base sur l'id du produit a supprimer, les chemins donc peuvent aussi etre dynamiques
+	@GetMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Long id){
 		
 		filmRep.delete(id);
