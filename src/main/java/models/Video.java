@@ -63,9 +63,8 @@ public class Video {
 		this.created = created;
 	}
 
-	public Video(Long id, Long duration, Blob content, Calendar created) {
+	public Video(Long duration, Blob content, Calendar created) {
 		super();
-		this.id = id;
 		this.duration = duration;
 		this.content = content;
 		this.created = created;

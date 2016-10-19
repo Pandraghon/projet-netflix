@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Add Series</title>
+</head>
+<body>
+<h1>Add Series</h1>
+	<form action="#" th:action="@{/series/add}" th:object="${media}"
+		method="post">
+		<table>
+			<tr>
+				<td>Serie Name :</td>
+				<td><input type="text" th:field="*{name}"></input></td>
+				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+					Errors</td>
+			</tr>
+			
+			<tr>
+				<td>Description :</td>
+				<td><input type="text" th:field="*{description}"></input></td>
+				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Trailer :</td>
+				<td><input type="text" th:field="*{trailer}"></input></td>
+				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
+					Errors</td>
+			</tr>
+			<tr>
+				<td><button type="submit">Add Serie</button></td>
+			</tr>
+
+		</table>
+
+
+	</form>
+</body>
+</html>

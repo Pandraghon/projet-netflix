@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+            <article id="movie-container" class="container one-media-container">
+                <img class="movie-poster" th:src="@{img/test.jpg}" /> 
+            </article>
+        </section>
+    </body>
+</html>
