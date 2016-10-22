@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import models.Film;
+import models.Media;
 import repositories.FilmRepository;
+import repositories.MediaRepository;
 
 @Controller
 @RequestMapping("/films")
@@ -30,6 +32,9 @@ public class FilmController {
 	
 	@Autowired
 	private FilmRepository filmRep; 
+	
+	@Autowired
+	private MediaRepository mediaRep;
 	
 	@GetMapping({"", "/"})
 	public String listFilms(Model model) {
@@ -53,31 +58,39 @@ public class FilmController {
 	
 	@PostMapping("/edit/{id}")
 	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathParam("id") Long id) {		
-		return PAGE_EDIT;
+		return "redirect:/" + SUBFOLDER;
 	}
 	
-	@GetMapping("create")
+	@GetMapping("add")
 	public String add(Model model) {
 		model.addAttribute("film",new Film());
+		model.addAttribute("media",new Media());
 		return PAGE_ADD;
 	}
 	
-	@PostMapping("/create")
-	public String add(Model model, @Valid Film film, BindingResult bindingResult) {
+	@PostMapping("/add")
+	public String add(Model model, @Valid Film film, @Valid Media media, BindingResult bindingResult) {
+		
 		if(bindingResult.hasErrors())
 		{
+			System.out.println("erreeeeur");
 			return "PAGE_ADD";
 		}
+		Media saveMedia = mediaRep.save(media);
+		System.out.println("NEW SAVED MEDIA WITH ID : "+ saveMedia.getId());
+		
+		film.setMedia(saveMedia);
 		Film saveFilm = filmRep.save(film);
+		
 		System.out.println("NEW SAVED FILM WITH ID : "+ saveFilm.getId());
-		return PAGE_ADD;
+		return "redirect:/" + SUBFOLDER;
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Long id){
 		
 		filmRep.delete(id);
-		return PAGE_DELETE;
+		return "redirect:/" + SUBFOLDER;
 	}
 }
 

@@ -8,14 +8,19 @@
 <h1>Listes des films</h1>
 
 	
-<a th:href="@{/create}">Ajouter</a>
+<a th:href="@{/films/add}">Ajouter</a>
 
 <div th:if="${#lists.isEmpty(film)}">
 Il n'existe pas de films dans la base !!!</div>
     <ul>
-    	<li th:each="film : ${film}"><span th:text="${film.name}"></span> 
+    	<li th:each="film : ${film}">
 		
-		
+		<span th:text="${film.id}"></span> 
+		<span th:text="${film.media.id}"></span> 
+	    <span th:text="${film.media.name}"></span> 
+	    <span th:text="${film.media.description}"></span>
+	    <span th:text="${film.media.image}"></span>
+	    <span th:text="${film.media.trailer}"></span>
 		<a th:href="@{/edit/{id}(id=${film.id})}">Editer</a>
 		<a th:href="@{/delete/{id}(id=${filmid})}">Supprimer</a>
     	<a th:href="@{/view/{id}(id=${filmid})}">Voir</a>
