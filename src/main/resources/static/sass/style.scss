@@ -2,6 +2,12 @@
 
 $break-large: 850px;
 
+html,
+body,
+section {
+    min-height: 100%
+}
+
 body {
     padding-top: 48px;
     background: darken(gray, 20%);
