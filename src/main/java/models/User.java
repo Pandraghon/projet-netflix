@@ -57,6 +57,14 @@ public class User {
 	)
 	private List<Media> wanted = new ArrayList<>();
 	
+	
+	@ManyToMany
+	@JoinTable(
+		name="seen",
+		joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
+		inverseJoinColumns=@JoinColumn(name="video_id", referencedColumnName="id")
+	)
+	private List<Media> seen = new ArrayList<>();
 	/*@OneToMany(mappedBy="user")
 	private List<Note> noted = new ArrayList<>();*/
 	
