@@ -3,13 +3,12 @@
 $break-large: 850px;
 
 html,
-body,
-section {
-    min-height: 100%
+body {
+    height: 100%;
 }
 
 body {
-    padding-top: 48px;
+    //padding-top: 48px;
     background: darken(gray, 20%);
     color: white;
     font-family: 'Yanone Kaffeesatz', sans-serif;
@@ -29,7 +28,14 @@ header {
         font-family: 'Lobster', cursive;
         font-size: 3em;
         
-        a { color: white; text-decoration: none; }
+        a { 
+            color: white; 
+            text-decoration: none; 
+            
+            &:hover {
+                @include single-text-shadow(0, 0, 10px, 4px, white);
+            }
+        }
     }
     
     #main-nav {
@@ -42,7 +48,15 @@ header {
             text-align: center;
         }
         
-        a { color: wheat; text-decoration: none; }
+        a { 
+            color: wheat; 
+            text-decoration: none; 
+            
+            &:hover {
+                color: white;
+                @include single-text-shadow(0, 0, 20px, 4px, wheat);
+            }
+        }
     }
     
     #secondary-nav {
@@ -59,6 +73,9 @@ header {
 }
 
 #main-container {
+    min-height: 100%;
+    @include display-flex();
+    @include flex-direction(column);
 }
 
 .container {
@@ -112,6 +129,7 @@ header {
                 top: 100%;
                 background: rgba(200, 200, 200, .7);
                 text-align: center;
+                min-height: 150px;
                 
                 @include transition-property(top);
                 @include transition-duration(.4s);
@@ -121,6 +139,42 @@ header {
                     margin-top: 40%;
                 }
             }
+        }
+    }
+}
+
+.header-spacer {
+    content: '';
+    height: 48px;
+}
+
+#media-container {
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+    background-size: auto 100%;
+    
+    @include flex-grow(2);
+    
+    .media-poster {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+    
+    .media-data {
+        position: absolute;
+        left: 35%;
+        top: 45%;
+        width: 400px;
+        
+        @include translateY(-50%);
+        
+        .media-title {
+            margin: 0;
         }
     }
 }

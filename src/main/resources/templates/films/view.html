@@ -5,8 +5,9 @@
     <body>
         <header th:include="fragments/header :: header"></header>
         <section id="main-container">
-            <article id="media-container" class="container">
-                <img class="media-poster" th:src="@{/img/test.jpg}" /> 
+            <div class="header-spacer"></div>
+            <article id="media-container" class="container" th:style="'background-image:url(' + @{/img/test.jpg} + ');'">
+                <!-- <img class="media-poster" th:src="@{/img/test.jpg}" /> -->
                 <div class="media-data">
                     <h2 class="media-title">Elephant Dream</h2>
                     <div class="movie-data">
