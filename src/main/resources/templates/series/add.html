@@ -7,7 +7,7 @@
 <body>
 <h1>Add Series</h1>
 	<form action="#" th:action="@{/series/add}" th:object="${media}"
-		method="post">
+		method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>Serie Name :</td>
@@ -15,7 +15,7 @@
 				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
 					Errors</td>
 			</tr>
-			
+
 			<tr>
 				<td>Description :</td>
 				<td><input type="text" th:field="*{description}"></input></td>
@@ -29,6 +29,10 @@
 					Errors</td>
 			</tr>
 			<tr>
+				<td>Serie Image :</td>
+				<td><input type="file" name="file" accept="image/*"/></td>
+			</tr>
+			<tr>
 				<td><button type="submit">Add Serie</button></td>
 			</tr>
 
@@ -36,5 +40,6 @@
 
 
 	</form>
+	<a th:href="@{/series}">Retour à l'index</a>
 </body>
 </html>

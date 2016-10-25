@@ -12,17 +12,35 @@
 
 <div th:if="${#lists.isEmpty(serie)}">
 il n'existe pas de séries dans la base !!!</div>
-    <ul >
-    	<li th:each="serie : ${serie}" >
+    
+    <table>
+    <tr>
+    	<th>ID</th>
+    	<th>name</th>
+    	<th>description</th>
+    	<th>trailer</th>
+    	<th>image name</th>
+    	<th>image</th>
+    	<th>Action</th>
+    	</tr>
     	
-	    	<span th:text="${serie.id}"></span> 
-	    	<span th:text="${serie.media.name}"></span> 
-	    	<span th:text="${serie.media.description}"></span>
-	    	<span th:text="${serie.media.trailer}"></span>
-		<a th:href="@{/edit/{id}(id=${serie.id})}">Editer</a>
+   
+    	<tr th:each="serie : ${serie}">
+	    	<td th:text="${serie.id}"></td>
+	    	<td th:text="${serie.media.name}"></td>
+	    	<td th:text="${serie.media.description}"></td>
+	    	<td th:text="${serie.media.trailer}"></td>
+	    	<td th:text="${serie.media.image}"></td>
+	    	<td><img th:src= "@{/images/{image}(image=${serie.media.image})}" height="42" width="42" />
+	    	<a th:href="@{/series}">Ouvrir</a>
+	    	</td>
+	    	
+		<td><a th:href="@{/edit/{id}(id=${serie.id})}">Editer</a>
 		<a th:href="@{/delete/{id}(id=${serie.id})}">Supprimer</a>
-    	</li>
-    </ul>
+		</td>
+		</tr>
+   </table>
+    
     
     <a th:href="@{/series}">Retour à l'index</a>
 </body>
