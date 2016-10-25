@@ -64,7 +64,7 @@ public class User {
 		joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="video_id", referencedColumnName="id")
 	)
-	private List<Media> seen = new ArrayList<>();
+	private List<Video> seen = new ArrayList<>();
 	/*@OneToMany(mappedBy="user")
 	private List<Note> noted = new ArrayList<>();*/
 	
