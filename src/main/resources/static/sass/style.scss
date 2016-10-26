@@ -1,6 +1,19 @@
 @import "base";
 
 $break-large: 850px;
+$break-small: 600px;
+
+@mixin webflix-text-shadow() { 
+    @include single-text-shadow(1px, 1px, 2px, 0, darkgoldenrod);
+}
+
+@mixin webflix-link-shadow() {
+    @include single-text-shadow(0, 0, 20px, 4px, wheat);
+}
+
+* {
+    box-sizing: border-box;
+}
 
 html,
 body {
@@ -8,8 +21,8 @@ body {
 }
 
 body {
-    //padding-top: 48px;
-    background: darken(gray, 20%);
+    //background: black;
+    background-image: -svg(linear-gradient(130deg, black, #4A646C 70%, #1A1110));
     color: white;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
@@ -54,7 +67,7 @@ header {
             
             &:hover {
                 color: white;
-                @include single-text-shadow(0, 0, 20px, 4px, wheat);
+                @include webflix-link-shadow();
             }
         }
     }
@@ -74,8 +87,11 @@ header {
 
 #main-container {
     min-height: 100%;
+    padding-top: 48px;
     @include display-flex();
     @include flex-direction(column);
+    
+    @include webflix-text-shadow();
 }
 
 .container {
@@ -143,11 +159,6 @@ header {
     }
 }
 
-.header-spacer {
-    content: '';
-    height: 48px;
-}
-
 #media-container {
     position: relative;
     
@@ -158,6 +169,22 @@ header {
     
     @include flex-grow(2);
     
+    @media (max-width: $break-small) {
+        background-position: center top;
+        background-size: 100% auto;
+    }
+    
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(10, 10, 10, .3);
+        @include single-box-shadow(4px, 1px, 9px, -6px, white, inset);
+    }
+    
     .media-poster {
         position: absolute;
         left: 0;
@@ -165,16 +192,66 @@ header {
         bottom: 0;
     }
     
-    .media-data {
+    .media-data,
+    .media-action {
         position: absolute;
+    }
+    
+    .media-action {
+        bottom: 0;
+        width: 100%;
+        border-top: 3px solid rgba(255, 255, 255, .3);
+        padding: 10px 0 10px 35%;
+        
+        @media (max-width: $break-small) {
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        button {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            font-size: 2em;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            text-transform: uppercase;
+            @include webflix-link-shadow();
+        }
+    }
+    
+    .media-data {
         left: 35%;
-        top: 45%;
+        top: 40%;
         width: 400px;
         
         @include translateY(-50%);
         
+        @media (max-width: $break-small) {  
+            position: initial;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+            
+            @include translateY(0);
+            
+            .media-title,
+            .video-data {
+                text-align: center;
+            }
+        }
+        
         .media-title {
-            margin: 0;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            font-variant: small-caps;
+        }
+        
+        .video-data {
+            margin-bottom: 20px;
+        }
+        
+        .media-one-data {
+            margin-right: 5px;
         }
     }
 }
