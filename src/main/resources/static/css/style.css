@@ -289,17 +289,19 @@ header li {
   }
 }
 /* line 211, ../sass/style.scss */
-#media-container .media-action button {
-  background: none;
+#media-container .media-action a {
+  display: inline-block;
   border: 2px solid white;
+  padding: 8px 12px;
   color: white;
   font-size: 2em;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   text-transform: uppercase;
+  text-decoration: none;
   text-shadow: 0 0 20px wheat;
   text-shadow: 0 0 20px 4px wheat;
 }
-/* line 222, ../sass/style.scss */
+/* line 224, ../sass/style.scss */
 #media-container .media-data {
   left: 35%;
   top: 40%;
@@ -310,7 +312,7 @@ header li {
   transform: translateY(-50%);
 }
 @media (max-width: 600px) {
-  /* line 222, ../sass/style.scss */
+  /* line 224, ../sass/style.scss */
   #media-container .media-data {
     position: initial;
     width: 90%;
@@ -321,23 +323,58 @@ header li {
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  /* line 237, ../sass/style.scss */
+  /* line 239, ../sass/style.scss */
   #media-container .media-data .media-title,
   #media-container .media-data .video-data {
     text-align: center;
   }
 }
-/* line 243, ../sass/style.scss */
+/* line 245, ../sass/style.scss */
 #media-container .media-data .media-title {
   margin: 0 0 10px 0;
   font-weight: bold;
   font-variant: small-caps;
 }
-/* line 249, ../sass/style.scss */
+/* line 251, ../sass/style.scss */
 #media-container .media-data .video-data {
   margin-bottom: 20px;
 }
-/* line 253, ../sass/style.scss */
+/* line 255, ../sass/style.scss */
 #media-container .media-data .media-one-data {
   margin-right: 5px;
+}
+
+/* line 261, ../sass/style.scss */
+#video-container {
+  position: relative;
+  -webkit-flex-grow: 2;
+  flex-grow: 2;
+}
+/* line 265, ../sass/style.scss */
+#video-container .video-title {
+  margin: 30px 0;
+  text-align: center;
+}
+/* line 270, ../sass/style.scss */
+#video-container video {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 100%;
+  height: auto;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+@media (max-height: 500px) {
+  /* line 270, ../sass/style.scss */
+  #video-container video {
+    position: initial;
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    margin: auto;
+  }
 }

@@ -208,13 +208,15 @@ header {
             text-align: center;
         }
         
-        button {
-            background: none;
+        a {
+            display: inline-block;
             border: 2px solid white;
+            padding: 8px 12px;
             color: white;
             font-size: 2em;
             font-family: 'Yanone Kaffeesatz', sans-serif;
             text-transform: uppercase;
+            text-decoration: none;
             @include webflix-link-shadow();
         }
     }
@@ -252,6 +254,31 @@ header {
         
         .media-one-data {
             margin-right: 5px;
+        }
+    }
+}
+
+#video-container {
+    position: relative;
+    @include flex-grow(2);
+    
+    .video-title {
+        margin: 30px 0;
+        text-align: center;
+    }
+    
+    video {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        max-width: 100%;
+        height: auto;
+        @include translate(-50%, -50%);
+        
+        @media (max-height: 500px) {
+            position: initial;
+            @include translate(0, 0);
+            margin: auto;
         }
     }
 }
