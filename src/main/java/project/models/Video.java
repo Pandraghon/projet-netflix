@@ -33,8 +33,8 @@ public class Video {
 	@NotNull
 	private Blob content;
 	
-	@ManyToMany(mappedBy="seen")
-	private List<User> watchers = new ArrayList<>();
+	/*@ManyToMany(mappedBy="seen")
+	private List<User> watchers = new ArrayList<>();*/
 	
 	private Calendar created = Calendar.getInstance();
 
