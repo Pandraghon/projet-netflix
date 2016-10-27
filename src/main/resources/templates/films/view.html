@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+            <article id="media-container" class="container" th:style="'background-image:url(' + @{/img/test.jpg} + ');'">
+                <!-- <img class="media-poster" th:src="@{/img/test.jpg}" /> -->
+                <div class="media-data">
+                    <h2 class="media-title">Elephant Dream</h2>
+                    <div class="video-data">
+                        <span class="media-one-data">Fantastique</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i>2006</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-clock-o"></i>11 min</span>
+                        <span class="media-one-data">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </div>
+                    <p class="media-description">Emo and Proog are two men exploring a strange industrial world of the future.</p>
+                </div>
+                <div class="media-action">
+                    <a th:href="@{/videos/view/1}" target="_blank">
+                        <i class="fa fa-play-circle-o"></i> Watch it now
+                    </a>
+                </div>
+            </article>
+        </section>
+    </body>
+</html>

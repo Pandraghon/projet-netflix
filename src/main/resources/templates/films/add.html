@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Nouveau film</title>
+</head>
+<body>
+
+	<h1>Créer un film</h1>
+	<form action="#" th:action="@{/films/add}" th:object="${media}"
+		method="post">
+		<table>
+			<tr>
+				<td>Nom :</td>
+				<td><input type="text" th:field="*{name}"></input></td>
+				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Date :</td>
+				<td><input type="date" th:field="*{date}"></input></td>
+				<td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Description :</td>
+				<td><input type="text" th:field="*{description}"></input></td>
+				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Trailer :</td>
+				<td><input type="text" th:field="*{trailer}"></input></td>
+				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Image :</td>
+				<td><input type="file" th:field="*{image}"></input></td>
+				<td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image
+					Errors</td>
+			</tr>
+			</table>
+			<tr>
+				<td><button type="submit">Enregistrer</button></td>
+			</tr>
+
+	</form>
+
+</body>
+</html>

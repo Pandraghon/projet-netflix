@@ -1,0 +1,284 @@
+@import "base";
+
+$break-large: 850px;
+$break-small: 600px;
+
+@mixin webflix-text-shadow() { 
+    @include single-text-shadow(1px, 1px, 2px, 0, darkgoldenrod);
+}
+
+@mixin webflix-link-shadow() {
+    @include single-text-shadow(0, 0, 20px, 4px, wheat);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    //background: black;
+    background-image: -svg(linear-gradient(130deg, black, #4A646C 70%, #1A1110));
+    color: white;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+header {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background: black;
+    @include single-box-shadow(0, 0, 16px, 8px, black);
+    
+    h1 {
+        display: inline-block;
+        font-family: 'Lobster', cursive;
+        font-size: 3em;
+        
+        a { 
+            color: white; 
+            text-decoration: none; 
+            
+            &:hover {
+                @include single-text-shadow(0, 0, 10px, 4px, white);
+            }
+        }
+    }
+    
+    #main-nav {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        
+        li {
+            width: 48px;
+            text-align: center;
+        }
+        
+        a { 
+            color: wheat; 
+            text-decoration: none; 
+            
+            &:hover {
+                color: white;
+                @include webflix-link-shadow();
+            }
+        }
+    }
+    
+    #secondary-nav {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        
+        a { color: gray; text-decoration: none; }
+    }
+    
+    li {
+        display: inline-block;
+    }
+}
+
+#main-container {
+    min-height: 100%;
+    padding-top: 48px;
+    @include display-flex();
+    @include flex-direction(column);
+    
+    @include webflix-text-shadow();
+}
+
+.container {
+    
+    h2 {
+        margin-top: 2vh;
+        margin-left: 4vw;
+        margin-bottom: 1vh;
+        font-size: 2em;
+        color: lighten(wheat, 4%);
+    }
+    
+}
+
+.media-container {
+    
+    .media-list {
+        @include display-flex();
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+        
+        .media-item {
+            position: relative;
+            display: block;
+            width: 20%;
+            height: 25vw;
+            overflow: hidden;
+            
+            @media (min-width: $break-large) {
+                width: 10%;
+                height: 13vw;
+              }
+            
+            &:hover {
+                background-color: yellow;
+                
+                .media-info {
+                    top: 0;
+                }
+            }
+            
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            
+            .media-info {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 100%;
+                background: rgba(200, 200, 200, .7);
+                text-align: center;
+                min-height: 150px;
+                
+                @include transition-property(top);
+                @include transition-duration(.4s);
+                @include transition-timing-function(ease-in);
+                
+                .media-title {
+                    margin-top: 40%;
+                }
+            }
+        }
+    }
+}
+
+#media-container {
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+    background-size: auto 100%;
+    
+    @include flex-grow(2);
+    
+    @media (max-width: $break-small) {
+        background-position: center top;
+        background-size: 100% auto;
+    }
+    
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(10, 10, 10, .3);
+        @include single-box-shadow(4px, 1px, 9px, -6px, white, inset);
+    }
+    
+    .media-poster {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+    
+    .media-data,
+    .media-action {
+        position: absolute;
+    }
+    
+    .media-action {
+        bottom: 0;
+        width: 100%;
+        border-top: 3px solid rgba(255, 255, 255, .3);
+        padding: 10px 0 10px 35%;
+        
+        @media (max-width: $break-small) {
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        a {
+            display: inline-block;
+            border: 2px solid white;
+            padding: 8px 12px;
+            color: white;
+            font-size: 2em;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            text-transform: uppercase;
+            text-decoration: none;
+            @include webflix-link-shadow();
+        }
+    }
+    
+    .media-data {
+        left: 35%;
+        top: 40%;
+        width: 400px;
+        
+        @include translateY(-50%);
+        
+        @media (max-width: $break-small) {  
+            position: initial;
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+            
+            @include translateY(0);
+            
+            .media-title,
+            .video-data {
+                text-align: center;
+            }
+        }
+        
+        .media-title {
+            margin: 0 0 10px 0;
+            font-weight: bold;
+            font-variant: small-caps;
+        }
+        
+        .video-data {
+            margin-bottom: 20px;
+        }
+        
+        .media-one-data {
+            margin-right: 5px;
+        }
+    }
+}
+
+#video-container {
+    position: relative;
+    @include flex-grow(2);
+    
+    .video-title {
+        margin: 30px 0;
+        text-align: center;
+    }
+    
+    video {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        max-width: 100%;
+        height: auto;
+        @include translate(-50%, -50%);
+        
+        @media (max-height: 500px) {
+            position: initial;
+            @include translate(0, 0);
+            margin: auto;
+        }
+    }
+}

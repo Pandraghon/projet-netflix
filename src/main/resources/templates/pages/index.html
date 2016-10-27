@@ -1,14 +1,75 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
     <head th:include="fragments/head :: head"></head>
     <body>
         <header th:include="fragments/header :: header"></header>
-        <div>TODO write content</div>
+        <section id="main-container">
+            <article id="presentation" class="container">
+                <h2>Presentation</h2>
+                <div class="content">
+                    <p>Webflix is a streaming website. All the videos you'll find here are open-source.</p>
+                </div>
+            </article>
+            <article id="movies-container" class="container media-container">
+                <h2>Movies you may like</h2>
+                <div class="content">
+                    <ul class="media-list">
+                        <li class="media-item">
+                            <img src="img/test.jpg" />
+                            <div class="media-info">
+                                <div class="media-title">Elephant Dream</div>
+                            </div>
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                    </ul>
+                </div>
+            </article>
+            <article id="series-container" class="container media-container">
+                <h2>TV-Shows you may like</h2>
+                <div class="content">
+                    <ul class="media-list">
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                        <li class="media-item">
+                            
+                        </li>
+                    </ul>
+                </div>
+            </article>
+        </section>
     </body>
 </html>

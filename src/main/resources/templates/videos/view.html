@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+            <article id="video-container" class="container">
+                <h2 class="video-title" th:text="'Elephant Dreams'"></h2>
+                <video width="600" height="400" controls="controls">
+                    <source th:src="@{/vid/big_buck_bunny_720p_stereo.avi}" type="video/x-msvideo" />
+                    <source th:src="@{/vid/big_buck_bunny_720p_stereo.ogg}" type="audio/ogg" />
+                    Your browser does not support the video tag.
+                </video>
+            </article>
+        </section>
+    </body>
+</html>
