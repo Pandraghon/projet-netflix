@@ -15,9 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import project.models.User;
+
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
+@Table(name="medias")
 public class Media {
 
 	@Id
@@ -34,8 +40,9 @@ public class Media {
 	@NotNull
 	private String name;
 	
-	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+	
 	private String description;
 	private String trailer;
 	private String image;
@@ -47,6 +54,8 @@ public class Media {
 	public Media(String name, Date date, String description, String trailer, String image) {
 		super();
 		this.name = name;
+		
+		
 		this.date = date;
 		this.description = description;
 		this.trailer = trailer;
@@ -89,3 +98,4 @@ public class Media {
 		this.image = image;
 	}
 }
+
