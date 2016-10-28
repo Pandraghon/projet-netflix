@@ -1,51 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title>Nouveau film</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+            <form th:action="@{/films/add}" th:object="${media}"
+                  method="post">
+                <fieldset>
+                    <legend>Créer un film</legend>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{name}" id="name" />
+                        <label class="input-label" for="name">Nom</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{date}" id="date" />
+                        <label class="input-label" for="date">Date</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
+                        <label class="input-label" for="description">Description</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{trailer}" id="trailer" />
+                        <label class="input-label" for="trailer">Trailer</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="file" th:field="*{image}" id="image" />
+                        <label class="input-label" for="image">Image</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="form-action">Enregistrer</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
 
-	<h1>Créer un film</h1>
-	<form action="#" th:action="@{/films/add}" th:object="${media}"
-		method="post">
-		<table>
-			<tr>
-				<td>Nom :</td>
-				<td><input type="text" th:field="*{name}"></input></td>
-				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Date :</td>
-				<td><input type="date" th:field="*{date}"></input></td>
-				<td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Description :</td>
-				<td><input type="text" th:field="*{description}"></input></td>
-				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Trailer :</td>
-				<td><input type="text" th:field="*{trailer}"></input></td>
-				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Image :</td>
-				<td><input type="file" th:field="*{image}"></input></td>
-				<td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image
-					Errors</td>
-			</tr>
-			</table>
-			<tr>
-				<td><button type="submit">Enregistrer</button></td>
-			</tr>
-
-	</form>
-
-</body>
+    </body>
 </html>
