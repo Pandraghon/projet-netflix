@@ -1,4 +1,4 @@
-package models;
+package project.models;
 
 import java.sql.Blob;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package models;
+package project.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+
+import project.models.Video;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +59,9 @@ public class User {
 	)
 	private List<Media> wanted = new ArrayList<>();
 	
+	/*@OneToMany(mappedBy="user")
+	private List<Note> noted = new ArrayList<>();
+	*/
 	
 	@ManyToMany
 	@JoinTable(
@@ -64,10 +69,8 @@ public class User {
 		joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="video_id", referencedColumnName="id")
 	)
-	private List<Media> seen = new ArrayList<>();
-	/*@OneToMany(mappedBy="user")
-	private List<Note> noted = new ArrayList<>();*/
-	
+	private List<Video> seen = new ArrayList<>();
+
 	public User() {
 		
 	}

@@ -1,13 +1,15 @@
-package models;
+package project.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name="categories")
 public class Categorie {
 
 	@Id
@@ -30,6 +32,4 @@ public class Categorie {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 }

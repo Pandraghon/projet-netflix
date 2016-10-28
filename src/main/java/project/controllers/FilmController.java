@@ -1,5 +1,7 @@
-package controllers;
+package project.controllers;
 
+
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import models.Film;
-import models.Media;
-import repositories.FilmRepository;
-import repositories.MediaRepository;
+import project.models.Film;
+import project.models.Media;
+import project.repositories.FilmRepository;
+import project.repositories.MediaRepository;
+import project.storage.StorageService;
 
 @Controller
 @RequestMapping("/films")
@@ -30,13 +34,20 @@ public class FilmController {
 	private final String PAGE_ADD 	= SUBFOLDER + "add";
 	private final String PAGE_DELETE = SUBFOLDER + "delete";
 	
+	private final StorageService storageService;
+	
 	@Autowired
 	private FilmRepository filmRep; 
 	
 	@Autowired
 	private MediaRepository mediaRep;
-	
-	@GetMapping({"", "/"})
+
+	@Autowired
+	   public FilmController(StorageService storageService) {
+	        this.storageService = storageService;
+	  }
+
+	@GetMapping({ "", "/" })
 	public String listFilms(Model model) {
 		model.addAttribute("film", (Iterable<Film>) filmRep.findAll());
 		return PAGE_LIST;
@@ -65,6 +76,16 @@ public class FilmController {
 	public String add(Model model) {
 		model.addAttribute("film",new Film());
 		model.addAttribute("media",new Media());
+		
+		model.addAttribute("images", storageService
+                .loadAll()
+                .map(path ->
+                        MvcUriComponentsBuilder
+                                .fromMethodName(SerieController.class, "serveFile", path.getFileName().toString())
+                                .build().toString())
+                .collect(Collectors.toList()));
+
+		
 		return PAGE_ADD;
 	}
 	

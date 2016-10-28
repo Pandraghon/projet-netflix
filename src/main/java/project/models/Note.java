@@ -1,3 +1,4 @@
+package project.models;
 /*package models;
 
 import javax.persistence.Entity;

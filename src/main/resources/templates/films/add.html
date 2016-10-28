@@ -14,11 +14,11 @@
                         <label class="input-label" for="name">Nom</label>
                         <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                     </div>
-                    <div class="input-group">
+                    <!--<div class="input-group">
                         <input class="input input-text" type="text" th:field="*{date}" id="date" />
                         <label class="input-label" for="date">Date</label>
                         <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
-                    </div>
+                    </div>-->
                     <div class="input-group">
                         <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
                         <label class="input-label" for="description">Description</label>

@@ -1,4 +1,4 @@
-package controllers;
+package project.controllers;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import models.User;
-import repositories.UserRepository;
+import project.models.User;
+import project.repositories.UserRepository;
 
 @Controller
 @RequestMapping("/users")
