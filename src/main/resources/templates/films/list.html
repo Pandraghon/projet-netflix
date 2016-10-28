@@ -20,6 +20,7 @@ Il n'existe pas de films dans la base !!!</div>
 	    <span th:text="${film.media.name}"></span> 
 	    <span th:text="${film.media.description}"></span>
 	    <span th:text="${film.media.image}"></span>
+	    <img th:src= "@{/images/{image}(image=${film.media.image})}" height="42" width="42" />
 	    <a th:href="${film.media.trailer}"><span th:text="${film.media.trailer}"></span></a>
 		<a th:href="@{/edit/{id}(id=${film.id})}">Editer</a>
 		<a th:href="@{/delete/{id}(id=${filmid})}">Supprimer</a>
