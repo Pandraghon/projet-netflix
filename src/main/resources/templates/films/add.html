@@ -6,7 +6,7 @@
         <header th:include="fragments/header :: header"></header>
         <section id="main-container">
             <form th:action="@{/films/add}" th:object="${media}"
-                  method="post">
+                  method="post" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Créer un film</legend>
                     <div class="input-group">

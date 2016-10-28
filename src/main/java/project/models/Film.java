@@ -24,6 +24,16 @@ public class Film {
 	
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
 	private Video video;
+	
+	
+
+	public Film() {
+		super();
+	}
+
+	public Film(Media media) {
+		this.media = media;
+	}
 
 	public Long getId() {
 		return id;
