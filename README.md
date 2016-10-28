@@ -16,16 +16,13 @@ Le contenu de l'application se base sur une liste de films "open-source" : [List
 
 ### Prérequis
 
-[Git][] et [JDK 8 update 20 ou plus récent][JDK8 build]
-
+[Git][] et [JDK 8 update 20 ou plus récent][JDK8 build]  
 Assurez-vous que la variable d'environnement `JAVA_HOME` pointe vers le dossier `jdk1.8.0`.
 
 ### Téléchargement des sources
 
-Clonez le projet
-
-`git clone git@github.com:Pandraghon/projet-netflix.git`
-
+Clonez le projet  
+`git clone git@github.com:Pandraghon/projet-netflix.git`  
 ou [télechargez le ZIP][ZIP]
 
 ### Importation des sources dans l'IDE
