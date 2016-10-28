@@ -1,8 +1,8 @@
-package repositories;
+package project.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import models.Media;
+import project.models.Media;
 
 public interface MediaRepository extends CrudRepository<Media , Long> {
 
