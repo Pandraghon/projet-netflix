@@ -30,7 +30,7 @@
                         <span class="input-error" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></span>
                     </div>
                     <div class="input-group">
-                        <input class="input input-text" type="file" th:field="*{image}" id="image" />
+                        <input type="file" name="file" accept="image/*"/>
                         <label class="input-label" for="image">Image</label>
                         <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
                     </div>

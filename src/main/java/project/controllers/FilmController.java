@@ -99,7 +99,7 @@ public class FilmController {
 	}
 	
 	@PostMapping("/add")
-	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file1") MultipartFile image,
+	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image,
             RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors())
