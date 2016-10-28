@@ -8,7 +8,7 @@
 
 	<h1>Créer un film</h1>
 	<form action="#" th:action="@{/films/add}" th:object="${media}"
-		method="post">
+		method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>Nom :</td>
@@ -34,12 +34,13 @@
 				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
 					Errors</td>
 			</tr>
-			<!--<tr>
+			<tr>
 				<td>Image :</td>
-				<td><input type="file" th:field="*{image}"></input></td>
-				<td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image
-					Errors</td>
-			</tr>-->
+				<!--<td><input type="file" th:field="*{image}"></input></td>-->
+				<td><input type="file" name="file1" accept="image/*"/></td>
+				<!--<td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image
+					Errors</td>-->
+			</tr>
 			</table>
 			<tr>
 				<td><button type="submit">Enregistrer</button></td>
