@@ -31,7 +31,7 @@ public class Episode {
 	private String description;
 	
 	@OneToOne
-	@JoinColumn(name="video_id", referencedColumnName="video_id")
+	@JoinColumn(name="video_id", referencedColumnName="id")
 	private Video video;
 	
 	@ManyToOne

@@ -3,6 +3,7 @@ package project.models;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ public class Video {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="video_id")
+	//@Column(name="video_id")
 	private Long id;
 	
 	@NotNull
@@ -33,10 +34,10 @@ public class Video {
 	@NotNull
 	private Blob content;
 	
-	/*@ManyToMany(mappedBy="seen")
-	private List<User> watchers = new ArrayList<>();*/
+	@ManyToMany(mappedBy="seen")
+	private List<User> watchers = new ArrayList<>();
 	
-	private Calendar created = Calendar.getInstance();
+	private Date created = new Date();
 
 	public Long getId() {
 		return id;
@@ -62,19 +63,27 @@ public class Video {
 		this.content = content;
 	}
 
-	public Calendar getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(Calendar created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 
-	public Video(Long duration, Blob content, Calendar created) {
+	public Video(Long duration, Blob content, Date created) {
 		super();
 		this.duration = duration;
 		this.content = content;
 		this.created = created;
+	}
+
+	public List<User> getWatchers() {
+		return watchers;
+	}
+
+	public void setWatchers(List<User> watchers) {
+		this.watchers = watchers;
 	}
 
 	@Override
