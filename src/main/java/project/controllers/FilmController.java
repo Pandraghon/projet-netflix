@@ -55,7 +55,6 @@ public class FilmController {
 	
 	@GetMapping("/view/{id}")
 	public String viewFilm(Model model, @PathVariable("id") Long id) {
-            System.out.println(id);
 		Film film = filmRep.findOne(id);
 		model.addAttribute(film);
 		return PAGE_VIEW;
