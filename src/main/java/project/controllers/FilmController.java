@@ -54,21 +54,22 @@ public class FilmController {
 	}
 	
 	@GetMapping("/view/{id}")
-	public String viewFilm(Model model, @PathParam("id") Long id) {
+	public String viewFilm(Model model, @PathVariable("id") Long id) {
+            System.out.println(id);
 		Film film = filmRep.findOne(id);
 		model.addAttribute(film);
 		return PAGE_VIEW;
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String editFilmForm(Model model, @PathParam("id") Long id) {
+	public String editFilmForm(Model model, @PathVariable("id") Long id) {
 		Film film= filmRep.findOne(id);
 		model.addAttribute("film", film);
 		return PAGE_EDIT;
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathParam("id") Long id) {		
+	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathVariable("id") Long id) {		
 		return "redirect:/" + SUBFOLDER;
 	}
 	

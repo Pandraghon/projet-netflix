@@ -57,7 +57,7 @@ public class SerieController {
     }
 
     @GetMapping("/view/{id}")
-    public String viewSerieInformations(Model model, @RequestParam("id") Long id) {
+    public String viewSerieInformations(Model model, @PathVariable("id") Long id) {
 
         return PAGE_VIEW;
     }

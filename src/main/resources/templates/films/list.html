@@ -24,7 +24,7 @@ Il n'existe pas de films dans la base !!!</div>
 	    <a th:href="${film.media.trailer}"><span th:text="${film.media.trailer}"></span></a>
 		<a th:href="@{/films/edit/{id}(id=${film.id})}">Editer</a>
 		<a th:href="@{/films/delete/{id}(id=${film.id})}">Supprimer</a>
-    	<a th:href="@{/films/view/{id}(id=${filmid})}">Voir</a>
+    	<a th:href="@{/films/view/{id}(id=${film.id})}">Voir</a>
     	</li>
     </ul>
 </body>
