@@ -1,35 +1,30 @@
 package project.controllers;
 
 
-import java.util.stream.Collectors;
+import java.io.File;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.apache.commons.io.FilenameUtils;
 
 import project.models.Film;
 import project.models.Media;
 import project.repositories.FilmRepository;
 import project.repositories.MediaRepository;
-import project.storage.StorageFileNotFoundException;
-import project.storage.StorageService;
 
 @Controller
 @RequestMapping("/films")
@@ -37,24 +32,20 @@ public class FilmController {
 
 	private final String SUBFOLDER 		= "films/";
 	
-	private final String PAGE_LIST 	= SUBFOLDER + "list";
+	private final String PAGE_LIST 	= SUBFOLDER + "index";
 	private final String PAGE_VIEW 	= SUBFOLDER + "view";
 	private final String PAGE_EDIT 	= SUBFOLDER + "edit";
 	private final String PAGE_ADD 	= SUBFOLDER + "add";
 	private final String PAGE_DELETE = SUBFOLDER + "delete";
 	
-	private final StorageService storageService;
+        @Autowired
+        private HttpServletRequest request;
 	
 	@Autowired
 	private FilmRepository filmRep; 
 	
 	@Autowired
 	private MediaRepository mediaRep;
-
-	@Autowired
-	   public FilmController(StorageService storageService) {
-	        this.storageService = storageService;
-	  }
 
 	@GetMapping({ "", "/" })
 	public String listFilms(Model model) {
@@ -63,21 +54,21 @@ public class FilmController {
 	}
 	
 	@GetMapping("/view/{id}")
-	public String viewFilm(Model model, @PathParam("id") Long id) {
+	public String viewFilm(Model model, @PathVariable("id") Long id) {
 		Film film = filmRep.findOne(id);
 		model.addAttribute(film);
 		return PAGE_VIEW;
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String editFilmForm(Model model, @PathParam("id") Long id) {
+	public String editFilmForm(Model model, @PathVariable("id") Long id) {
 		Film film= filmRep.findOne(id);
 		model.addAttribute("film", film);
 		return PAGE_EDIT;
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathParam("id") Long id) {		
+	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathVariable("id") Long id) {		
 		return "redirect:/" + SUBFOLDER;
 	}
 	
@@ -85,16 +76,7 @@ public class FilmController {
 	public String add(Model model) {
 		model.addAttribute("film",new Film());
 		model.addAttribute("media",new Media());
-		
-		model.addAttribute("images", storageService
-                .loadAll()
-                .map(path ->
-                        MvcUriComponentsBuilder
-                                .fromMethodName(SerieController.class, "serveFile", path.getFileName().toString())
-                                .build().toString())
-                .collect(Collectors.toList()));
-
-		
+			
 		return PAGE_ADD;
 	}
 	
@@ -108,10 +90,26 @@ public class FilmController {
 			return "PAGE_ADD";
 		}
 		
-		storageService.store(image);
-		
-		media.setImage(image.getOriginalFilename());
 		Media saveMedia = mediaRep.save(media);
+                String filePath = "";
+                if (!image.isEmpty()) {
+                    try {
+                        String uploadsDir = "/img/";
+                        String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+                        if(! new File(realPathtoUploads).exists())
+                            new File(realPathtoUploads).mkdir();
+
+                        filePath = Long.toString(saveMedia.getId()) + "." + FilenameUtils.getExtension(image.getOriginalFilename());
+                        String path = realPathtoUploads + filePath;
+                        File dest = new File(path);
+                        image.transferTo(dest);
+                    } catch(IOException | IllegalStateException e) {
+                        
+                    }
+                }
+		
+		saveMedia.setImage(filePath);
+                saveMedia = mediaRep.save(saveMedia);
 		System.out.println("NEW SAVED MEDIA WITH ID : "+ saveMedia.getId() + " NAME = " + saveMedia.getImage() );
 		
 		Film film = new Film(media);
@@ -123,26 +121,12 @@ public class FilmController {
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String deleteProduct(@PathVariable("id") Long id){
+	public String delete(@PathVariable("id") Long id){
 		
 		filmRep.delete(id);
 		return "redirect:/" + SUBFOLDER;
 	}
 	
-    @GetMapping("/images/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity
-                .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
-                .body(file);
-    }
-	
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
-    }
+    
 }
 
