@@ -10,17 +10,15 @@
 	 <section id="main-container">
             <article id="movies-container" class="container media-container">
                 <div class="content">
-                <a th:href="@{/series/add}">Ajouter une série</a>
-                <a th:href="@{/series/addEpisode}">Ajouter episode</a>
-                    <ul class="media-list" th:each="serie : ${serie}">
+                    <ul class="media-list" th:each="episode : ${episodes}">
                         <li class="media-item">
-                            <a th:href="@{/series/view/{id}(id=${serie.id})}">
+                            <!--  <a th:href="@{/series/view/{id}(id=${serie.id})}">
                                 <img th:src="@{/images/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">
                                     <div class="media-title">Elephant Dream</div>
                                     <div class="media-date">(2006)</div>
                                 </div>
-                            </a>
+                            </a>-->
                         </li>
                      	</ul>
                      </div>

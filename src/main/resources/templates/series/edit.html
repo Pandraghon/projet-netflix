@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Modifier les series</title>
+</head>
+<body>
+<h1>Edit Series</h1>
+	<form action="#" th:action="@{/series/edit}" th:object="${media}"
+		method="post" enctype="multipart/form-data">
+		<input type="hidden" th:field="*{id}"/> 
+		<table>
+			<tr>
+				<td>Serie Name :</td>
+				<td><input type="text" th:field="*{name}"></input></td>
+				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+					Errors</td>
+			</tr>
+
+			<tr>
+				<td>Description :</td>
+				<td><input type="text" th:field="*{description}"></input></td>
+				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Trailer :</td>
+				<td><input type="text" th:field="*{trailer}"></input></td>
+				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
+					Errors</td>
+			</tr>
+			
+			<tr>
+				
+				<td><input type="hidden" th:field="*{image}"></input></td>
+				<td th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image
+					Errors</td>
+			</tr>
+			<tr>
+				<td><button type="submit">Edit Serie</button></td>
+			</tr>
+
+		</table>
+
+
+	</form>
+	<a th:href="@{/series}">Retour à l'index</a>
+</body>
+</html>

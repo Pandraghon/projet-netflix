@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    
+<head th:include="fragments/head :: head"></head>
+
+<body>
+
+<header th:include="fragments/header :: header"></header>
+
+<section id="main-container">
+
+<div class="content">
+	<form action="#" th:action="@{/series/view}" th:object="${serie}"
+		method="post" enctype="multipart/form-data">
+		
+		
+		
+		<input type="hidden" th:field="*{id}"/> 
+		<table>
+			<tr>
+				<td>Serie Name :</td>
+				<td><span th:text="${serie.media.name}" ></span></td>
+			</tr>
+			
+			<!-- <tr>
+			<td>Saisons :</td>
+			<div th:if="${#lists.isEmpty(saisons)}">
+						il n'existe pas d'episodes pour cette série !!!</div>
+				<td><select name="saison">
+						<option th:each=" saison : ${saisons}"
+								
+								th:text="${saison}" 
+								th:value="${saison}" >
+								<a th:href="@{/series}">Retour à l'index</a>
+								</option>
+						</select></td>
+			</tr> -->
+			<tr>
+			<td>Saisons :</td>
+			<div th:if="${#lists.isEmpty(saisons)}">
+						il n'existe pas d'episodes pour cette série !!!</div>
+				<td>
+				<ul>
+						<li th:each=" saison : ${saisons}">
+							<a th:href="@{/series/view/{id}(id=${serie.id})/{saison_number}(saison_number=${saison})/listEpisode}"> Saison  <span th:text="${saison}" ></span> </a>
+							<!--  <span th:text="${saison}" ></span> : <span th:text="${fruit.price}"></span> €
+		
+								th:text="${saison}" 
+								th:value="${saison}" >-->
+								
+								</li>
+						</ul>
+						</td>
+			</tr>
+			<tr>
+				<td>Description :</td>
+				<td><span th:text="${serie.media.description}"></span></td>
+				
+			</tr>
+			<tr>
+				<td>Trailer :</td>
+				<td><span th:text="${serie.media.trailer}"></span></td>
+				
+			</tr>
+			
+			<tr>
+				
+				<td><img th:src="@{/images/{image}(image=${serie.media.image})}" weight="60" height="60"/></td>
+				
+			</tr>
+
+		</table>
+
+
+	</form>
+	<a th:href="@{/series}">Retour à l'index</a>
+	</div>
+	</section>
+</body>
+</html>

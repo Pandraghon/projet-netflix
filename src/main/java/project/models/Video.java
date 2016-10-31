@@ -25,7 +25,7 @@ public class Video {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	//@Column(name="video_id")
+
 	private Long id;
 	
 	@NotNull

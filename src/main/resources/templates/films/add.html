@@ -34,6 +34,16 @@
                         <label class="input-label" for="image">Image</label>
                         <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
                     </div>
+                    <div class="input-group">
+                        <input class="input input-text last-input" list="categories" id="categories[]" />
+                        <label class="input-label" for="categories[]">Catégories</label>
+                        <datalist id="categories">
+                            <option value="Aventure" />
+                            <option value="Fantastique" />
+                            <option value="Romance" />
+                            <option value="Historique" />
+                        </datalist>
+                    </div>
                     <div class="form-actions">
                         <button type="submit" class="form-action">Enregistrer</button>
                     </div>
@@ -41,5 +51,7 @@
             </form>
         </section>
 
+        <script th:src="@{/js/form.js}" />
+        
     </body>
 </html>

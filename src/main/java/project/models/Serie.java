@@ -32,6 +32,11 @@ public class Serie {
 	@JoinColumn(name="media_id",referencedColumnName="id")
 	private Media media;
 	
+	
+	@OneToMany
+	@JoinColumn(name="episode_id",referencedColumnName="id")
+	private List<Episode> episode = new ArrayList<>();
+	
 	public Serie() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -43,7 +48,7 @@ public class Serie {
 		
 	}
 
-	
+
 	public long getId() {
 		return id;
 	}
@@ -78,8 +83,41 @@ public class Serie {
 		this.episodes = episodes;
 	}
 
+	public void supprimerEpisode(Episode epi)
+	{
+		this.episode.remove(epi);
+	}
 
+	public void ajouterEpisode(Episode epi)
+	{
+		this.episode.add(epi);
+	}
 
-
-	
+	public List<Long> listeSaisons() {
+		boolean bool = true;
+		Long nb_saisons1;
+		List<Long> premieressaisons = new ArrayList<>();
+		List<Long> saisons  = new ArrayList<>();
+		
+		if(this.episodes.size()>0)
+		{
+					
+			for (Episode episode : this.episodes)
+			{
+				premieressaisons.add(episode.getSaison_number());
+			}
+		
+			nb_saisons1 = premieressaisons.get(0);
+			saisons.add(nb_saisons1);
+			
+			for (Long sais_nb : premieressaisons)
+			{
+				if(!saisons.contains(sais_nb))
+				{
+					saisons.add(sais_nb);
+				}
+			}
+		}
+		return saisons;
+	}
 }
