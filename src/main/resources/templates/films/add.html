@@ -15,7 +15,7 @@
                         <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                     </div>
                     <!--<div class="input-group">
-                        <input class="input input-text" type="text" th:field="*{date}" id="date" />
+                        <input class="input input-text" type="date" th:field="*{date}" id="date" />
                         <label class="input-label" for="date">Date</label>
                         <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
                     </div>-->
@@ -25,7 +25,7 @@
                         <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                     </div>
                     <div class="input-group">
-                        <input class="input input-text" type="text" th:field="*{trailer}" id="trailer" />
+                        <input class="input input-text" type="url" th:field="*{trailer}" id="trailer" />
                         <label class="input-label" for="trailer">Trailer</label>
                         <span class="input-error" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></span>
                     </div>
