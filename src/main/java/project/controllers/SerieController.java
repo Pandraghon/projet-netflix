@@ -1,5 +1,6 @@
 package project.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,7 @@ public class SerieController {
 	private final String PAGE_EDIT 		= SUBFOLDER + "edit";
 	private final String PAGE_ADD 		= SUBFOLDER + "add";
 	private final String PAGE_ADD_EPISODE 		= SUBFOLDER + "addEpisode";
+	private final String PAGE_LIST_EPISODE 		= SUBFOLDER + "listEpisode";
 	private final String PAGE_DELETE 	= SUBFOLDER + "delete";
 	
 	private final StorageService storageService;
@@ -93,6 +95,29 @@ public class SerieController {
 		model.addAttribute("saisons", saisons);
 		
 		return PAGE_VIEW;
+	}
+	
+	@GetMapping("/view/{id}/{saison_number}/listEpisode")
+	public String listEpisodes(@PathVariable("id") Long id,@PathVariable("saison_number") Long saison_number, Model model) {
+		
+		Serie serie = SerieRepository.findOne(id);
+		model.addAttribute("serie", serie);
+		Media media = serie.getMedia();
+		model.addAttribute("media", media);
+		
+		List<Episode> all = serie.getEpisodes();
+		List<Episode> episodes = new ArrayList<>();
+		for(Episode episode : all)
+		{
+			if(episode.getSaison_number()==saison_number)
+			{
+				episodes.add(episode);
+			}
+		}
+
+		model.addAttribute("episodes", episodes);
+		
+		return PAGE_LIST_EPISODE;
 	}
 	
 	@GetMapping("/addEpisode")
