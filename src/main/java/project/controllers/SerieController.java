@@ -1,27 +1,25 @@
+
 package project.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.models.Episode;
@@ -30,7 +28,6 @@ import project.models.Serie;
 import project.repositories.EpisodeRepository;
 import project.repositories.MediaRepository;
 import project.repositories.SerieRepository;
-import project.storage.StorageFileNotFoundException;
 import project.storage.StorageService;
 
 @Controller
@@ -62,6 +59,8 @@ public class SerieController {
 	@Autowired
 	private EpisodeRepository EpisodeRepository;
 	
+	@Autowired
+	private HttpServletRequest request;
 	
 	  @Autowired
 	   public SerieController(StorageService storageService) {
@@ -157,51 +156,56 @@ public class SerieController {
 		return "redirect:/series/view/"+serie.getId(); 
 	}
 	
-	@GetMapping("/add")
-	public String addSerieForm(Model model)
-	{
-		model.addAttribute("serie",new Serie());
-		model.addAttribute("media", new Media());
-		
-		model.addAttribute("images", storageService
-                .loadAll()
-                .map(path ->
-                        MvcUriComponentsBuilder
-                                .fromMethodName(SerieController.class, "serveFile", path.getFileName().toString())
-                                .build().toString())
-                .collect(Collectors.toList()));
 
-		return PAGE_ADD;
-	}
+    @GetMapping("/add")
+    public String addSerieForm(Model model) {
+        model.addAttribute("serie", new Serie());
+        model.addAttribute("media", new Media());
+
+        return PAGE_ADD;
+    }
+
 	
-	@PostMapping("/add")
-	public String addSerie(@Valid Media media, BindingResult bindingresult,@RequestParam("file") MultipartFile image,
-            RedirectAttributes redirectAttributes){
+    @PostMapping("/add")
+    public String addSerie(@Valid Media media, BindingResult bindingresult, @RequestParam("file") MultipartFile image,
+            RedirectAttributes redirectAttributes) {
 
-		if(bindingresult.hasErrors())
-		{
-			System.out.println("ADD ERRORS : "+ bindingresult.toString());
-			return PAGE_ADD;
-		}
-		
-		
-		
-		storageService.store(image);
-		
-		media.setImage(image.getOriginalFilename());
-		Media savemedia = MediaRepository.save(media);
-		
-		Serie serie = new Serie(media);
-		serie.setMedia(media);
-		Serie saveSerie = SerieRepository.save(serie);
-		
-		
-		System.out.println("NEW SAVED MEDIA WITH ID : "+ savemedia.getId() + " NAME = " + savemedia.getName() + " IMAGE = " + savemedia.getImage()) ;
-		System.out.println("NEW SAVED SERIE WITH ID : "+ saveSerie.getMedia().getId()+ " NAME = " + saveSerie.getMedia().getName() + " IMAGE = " + saveSerie.getMedia().getImage());
+        if (bindingresult.hasErrors()) {
+            System.out.println("ADD ERRORS : " + bindingresult.toString());
+            return PAGE_ADD;
+        }
 
-		
-		return "redirect:/series"; 
-	}
+        Media saveMedia = MediaRepository.save(media);
+        String filePath = "";
+        if (!image.isEmpty()) {
+            try {
+                String uploadsDir = "/img/";
+                String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+                if (!new File(realPathtoUploads).exists()) {
+                    new File(realPathtoUploads).mkdir();
+                }
+
+                filePath = Long.toString(saveMedia.getId()) + "." + FilenameUtils.getExtension(image.getOriginalFilename());
+                String path = realPathtoUploads + filePath;
+                File dest = new File(path);
+                image.transferTo(dest);
+            } catch (IOException | IllegalStateException e) {
+
+            }
+        }
+
+        saveMedia.setImage(filePath);
+        saveMedia = MediaRepository.save(saveMedia);
+
+        Serie serie = new Serie(media);
+        serie.setMedia(media);
+        Serie saveSerie = SerieRepository.save(serie);
+
+        System.out.println("NEW SAVED MEDIA WITH ID : " + saveMedia.getId() + " NAME = " + saveMedia.getName() + " IMAGE = " + saveMedia.getImage());
+        System.out.println("NEW SAVED SERIE WITH ID : " + saveSerie.getMedia().getId() + " NAME = " + saveSerie.getMedia().getName() + " IMAGE = " + saveSerie.getMedia().getImage());
+
+        return "redirect:/series";
+    }
 	
 	@GetMapping("/delete/{id}")
 	public String deleteSerie(@PathVariable("id") Long id){
@@ -245,21 +249,11 @@ public class SerieController {
 		
 	}
 	
-    @GetMapping("/images/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity
-                .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
-                .body(file);
-    }
-	
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
-    }
 	
 	
+
+
+
+
 }

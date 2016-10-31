@@ -6,8 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import project.models.Media;
+import project.models.Video;
 
 @Entity
+@Table(name="films")
 public class Film {
 
 	@Id
@@ -19,6 +24,16 @@ public class Film {
 	
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
 	private Video video;
+	
+	
+
+	public Film() {
+		super();
+	}
+
+	public Film(Media media) {
+		this.media = media;
+	}
 
 	public Long getId() {
 		return id;

@@ -23,6 +23,7 @@ body {
 body {
     //background: black;
     background-image: -svg(linear-gradient(130deg, black, #4A646C 70%, #1A1110));
+    background-attachment: fixed;
     color: white;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
@@ -35,51 +36,51 @@ header {
     text-align: center;
     background: black;
     @include single-box-shadow(0, 0, 16px, 8px, black);
-    
+
     h1 {
         display: inline-block;
         font-family: 'Lobster', cursive;
         font-size: 3em;
-        
+
         a { 
             color: white; 
             text-decoration: none; 
-            
+
             &:hover {
                 @include single-text-shadow(0, 0, 10px, 4px, white);
             }
         }
     }
-    
+
     #main-nav {
         position: absolute;
         bottom: 0;
         left: 0;
-        
+
         li {
             width: 48px;
             text-align: center;
         }
-        
+
         a { 
             color: wheat; 
             text-decoration: none; 
-            
+
             &:hover {
                 color: white;
                 @include webflix-link-shadow();
             }
         }
     }
-    
+
     #secondary-nav {
         position: absolute;
         bottom: 0;
         right: 0;
-        
+
         a { color: gray; text-decoration: none; }
     }
-    
+
     li {
         display: inline-block;
     }
@@ -90,12 +91,36 @@ header {
     padding-top: 48px;
     @include display-flex();
     @include flex-direction(column);
-    
+
     @include webflix-text-shadow();
 }
 
-.container {
+.actions-bar {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
     
+    .action {
+        display: inline-block;
+        height: 25px;
+        width: 25px;
+        padding-top: 4px;
+        border-radius: 25px;
+        background-color: wheat;
+        color: black;
+        border: 1px solid black;
+        
+        &:hover {
+            background-color: black;
+            color: wheat;
+            border: 1px solid wheat;
+        }
+    }
+}
+
+.container {
+
     h2 {
         margin-top: 2vh;
         margin-left: 4vw;
@@ -103,41 +128,49 @@ header {
         font-size: 2em;
         color: lighten(wheat, 4%);
     }
-    
+
 }
 
 .media-container {
     
+    .no-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        
+        @include translate(-50%, -50%);
+    }
+
     .media-list {
         @include display-flex();
         @include flex-direction(row);
         @include flex-wrap(wrap);
-        
+
         .media-item {
             position: relative;
             display: block;
             width: 20%;
             height: 25vw;
             overflow: hidden;
-            
+
             @media (min-width: $break-large) {
                 width: 10%;
                 height: 13vw;
-              }
-            
+            }
+
             &:hover {
                 background-color: yellow;
-                
+
                 .media-info {
                     top: 0;
                 }
             }
-            
+
             img {
                 width: 100%;
                 height: 100%;
             }
-            
+
             .media-info {
                 position: absolute;
                 width: 100%;
@@ -146,11 +179,11 @@ header {
                 background: rgba(200, 200, 200, .7);
                 text-align: center;
                 min-height: 150px;
-                
+
                 @include transition-property(top);
                 @include transition-duration(.4s);
                 @include transition-timing-function(ease-in);
-                
+
                 .media-title {
                     margin-top: 40%;
                 }
@@ -161,19 +194,19 @@ header {
 
 #media-container {
     position: relative;
-    
+
     background-repeat: no-repeat;
     background-size: cover;
     background-position: left center;
     background-size: auto 100%;
-    
+
     @include flex-grow(2);
-    
+
     @media (max-width: $break-small) {
         background-position: center top;
         background-size: 100% auto;
     }
-    
+
     &:before {
         content: '';
         position: absolute;
@@ -184,30 +217,30 @@ header {
         background-color: rgba(10, 10, 10, .3);
         @include single-box-shadow(4px, 1px, 9px, -6px, white, inset);
     }
-    
+
     .media-poster {
         position: absolute;
         left: 0;
         top: 0;
         bottom: 0;
     }
-    
+
     .media-data,
     .media-action {
         position: absolute;
     }
-    
+
     .media-action {
         bottom: 0;
         width: 100%;
         border-top: 3px solid rgba(255, 255, 255, .3);
         padding: 10px 0 10px 35%;
-        
+
         @media (max-width: $break-small) {
             padding: 10px 0;
             text-align: center;
         }
-        
+
         a {
             display: inline-block;
             border: 2px solid white;
@@ -220,38 +253,38 @@ header {
             @include webflix-link-shadow();
         }
     }
-    
+
     .media-data {
         left: 35%;
         top: 40%;
         width: 400px;
-        
+
         @include translateY(-50%);
-        
+
         @media (max-width: $break-small) {  
             position: initial;
             width: 90%;
             margin: auto;
             margin-top: 20px;
-            
+
             @include translateY(0);
-            
+
             .media-title,
             .video-data {
                 text-align: center;
             }
         }
-        
+
         .media-title {
             margin: 0 0 10px 0;
             font-weight: bold;
             font-variant: small-caps;
         }
-        
+
         .video-data {
             margin-bottom: 20px;
         }
-        
+
         .media-one-data {
             margin-right: 5px;
         }
@@ -261,12 +294,12 @@ header {
 #video-container {
     position: relative;
     @include flex-grow(2);
-    
+
     .video-title {
         margin: 30px 0;
         text-align: center;
     }
-    
+
     video {
         position: absolute;
         left: 50%;
@@ -274,11 +307,97 @@ header {
         max-width: 100%;
         height: auto;
         @include translate(-50%, -50%);
-        
+
         @media (max-height: 500px) {
             position: initial;
             @include translate(0, 0);
             margin: auto;
         }
+    }
+}
+
+form {
+    width: 95%;
+    max-width: 500px;
+    min-width: 300px;
+    margin: auto;
+
+    fieldset {
+        @include single-box-shadow(0, 0, 5px, 0, #000);
+        margin-bottom: 5px;
+        padding: 24px;
+        border: none;
+        border-radius: 8px;
+        background-color: #393939;
+        background-image: -svg(linear-gradient(130deg, darken(#464d55, 10%), darken(#464d55, 4%) 70%, darken(#464d55, 10%)));
+    }
+
+    legend {
+        font-weight: bold;
+        padding: 10px 35px;
+        color: lighten(#464d55, 25%);
+        @include single-text-shadow(0, 1px, 0, rgba(75,75,75,0.8));
+    }
+
+    .input-group {
+        position: relative;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .input {
+        width: 100%;
+        margin: 0;
+        padding: 4px 8px;
+        background-color: #464d55;
+        border-radius: 8px;
+        box-shadow: #000 0 0 4px 1px inset;
+        border: none;
+        color: white;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.input-text {
+            height: 32px;
+        }
+
+        &.input-textarea {
+            height: 64px;
+            resize: vertical;
+        }
+    }
+
+    .input-label {
+        position: absolute;
+        bottom: calc(100% + 4px);
+        left: 8px;  
+        @include single-text-shadow(0, -1px, 0, 0, #000);
+    }
+
+    .input-error {
+        position: absolute;
+        bottom: calc(100% + 2px);
+        right: 0;
+        font-size: .8em;
+        color: #ee5565;
+    }
+
+    .form-actions {
+        width: 100%;
+        padding: 25px 0 5px 0;
+        text-align: center;
+    }
+
+    .form-action {
+        @include single-text-shadow(0, -1px, 0, 0, #000);
+        @include single-box-shadow(0, 0, 1px, 0, #000);
+        background-color: #1f2026;
+        background-image: -svg(linear-gradient(180deg, #1A1110, #353333 60%, #15161a));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 8px;
     }
 }

@@ -5,13 +5,11 @@
  */
 package project.controllers;
 
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import project.models.User;
 
 @Controller
 public class WebController {
