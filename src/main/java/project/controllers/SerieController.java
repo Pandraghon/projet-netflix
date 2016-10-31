@@ -1,5 +1,6 @@
 package project.controllers;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -22,8 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.models.Episode;
 import project.models.Media;
 import project.models.Serie;
+import project.repositories.EpisodeRepository;
 import project.repositories.MediaRepository;
 import project.repositories.SerieRepository;
 import project.storage.StorageFileNotFoundException;
@@ -42,6 +45,7 @@ public class SerieController {
 	private final String PAGE_LIST 		= SUBFOLDER + "list";
 	private final String PAGE_EDIT 		= SUBFOLDER + "edit";
 	private final String PAGE_ADD 		= SUBFOLDER + "add";
+	private final String PAGE_ADD_EPISODE 		= SUBFOLDER + "addEpisode";
 	private final String PAGE_DELETE 	= SUBFOLDER + "delete";
 	
 	private final StorageService storageService;
@@ -51,6 +55,10 @@ public class SerieController {
 
 	@Autowired
 	private MediaRepository MediaRepository;
+	
+	
+	@Autowired
+	private EpisodeRepository EpisodeRepository;
 	
 	
 	  @Autowired
@@ -71,9 +79,57 @@ public class SerieController {
 	}
 	
 	@GetMapping("/view/{id}")
-	public String viewSerieInformations(Model model, @RequestParam("id") Long id) {
+	public String viewSerieInformations(@PathVariable("id") Long id,Model model) {
+		
+		Serie serie = SerieRepository.findOne(id);
+		model.addAttribute("serie", serie);
+		Media media = serie.getMedia();
+		model.addAttribute("media", media);
+		
+		List<Long> saisons = serie.listeSaisons();
+		/*List<Episode> episodes = serie.getEpisodes();
+		model.addAttribute("episode", episodes);*/
+		
+		model.addAttribute("saisons", saisons);
 		
 		return PAGE_VIEW;
+	}
+	
+	@GetMapping("/addEpisode")
+	public String addEpisodeGet(Model model) {
+		
+		
+		model.addAttribute("episode", new Episode());
+		List<Serie> listserie = (List<Serie>) SerieRepository.findAll();
+		model.addAttribute("serie",listserie);
+		
+		return PAGE_ADD_EPISODE;
+	}
+	
+	@PostMapping("/addEpisode")
+	public String addEpisode(@Valid Episode episode, BindingResult bindingresult) {
+		
+		
+
+		if(bindingresult.hasErrors())
+		{
+			System.out.println("ADD ERRORS : "+ bindingresult.toString());
+			return PAGE_ADD_EPISODE;
+		}
+		
+		EpisodeRepository.save(episode);
+		
+		
+		Serie serie = episode.getSerie();
+		List<Episode> listEpisodes = serie.getEpisodes();
+		listEpisodes.add(episode);
+		//Serie serie = episode.getSerie();
+		//serie.ajouterEpisode(episode);
+		 
+		SerieRepository.save(serie);
+		System.out.println("NEW SAVED EPISODE WITH ID : "+ episode.getId() + " NAME = " + episode.getTitre() + " SERIE = " + episode.getSerie().getMedia().getName()) ;
+		System.out.println("NEW SAVED SERIE WITH ID : "+ serie.getId() + " NAME = " + serie.getMedia().getName() + " SAISON = " + listEpisodes.size());
+		return "redirect:/series/view/"+serie.getId(); 
 	}
 	
 	@GetMapping("/add")
@@ -125,8 +181,11 @@ public class SerieController {
 	@GetMapping("/delete/{id}")
 	public String deleteSerie(@PathVariable("id") Long id){
 		
+		Serie serie = SerieRepository.findOne(id);
+		//serie.getMedia()
 		SerieRepository.delete(id);
-		return PAGE_LIST;
+
+		return "redirect:/series";
 	}
 	
 	
@@ -135,16 +194,28 @@ public class SerieController {
 		
 		Serie serie= SerieRepository.findOne(id);
 		model.addAttribute("serie", serie);
-		
+		Media media = serie.getMedia();
+		model.addAttribute("media", media);
 		return PAGE_EDIT;
 	}
 	
 
 	@PostMapping("/edit")
-	public String editSerie(@Valid Serie serie){
+	public String editSerie(@Valid Media media,BindingResult bindingresult){
 		
-		System.out.println("SAVED EDIT SERIE WITH ID : "+ serie.getId());
+		if(bindingresult.hasErrors())
+		{
+			System.out.println("ADD ERRORS : "+ bindingresult.toString());
+			return PAGE_EDIT;
+		}
+		
+		
+		
+		Media savemedia = MediaRepository.save(media);
+		Serie serie = SerieRepository.findOne(media.getId());
+		serie.setMedia(savemedia);
 		SerieRepository.save(serie);
+		
 		return "redirect:/series"; 
 		
 	}
