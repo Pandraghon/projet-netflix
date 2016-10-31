@@ -1,16 +1,21 @@
 package project.models;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import project.models.User;
 
 @Entity
 @Table(name="videos")
@@ -20,7 +25,7 @@ public class Video {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	
+
 	private Long id;
 	
 	@NotNull
@@ -29,7 +34,10 @@ public class Video {
 	@NotNull
 	private Blob content;
 	
-	private Calendar created = Calendar.getInstance();
+	@ManyToMany(mappedBy="seen")
+	private List<User> watchers = new ArrayList<>();
+	
+	private Date created = new Date();
 
 	public Long getId() {
 		return id;
@@ -55,19 +63,27 @@ public class Video {
 		this.content = content;
 	}
 
-	public Calendar getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(Calendar created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 
-	public Video(Long duration, Blob content, Calendar created) {
+	public Video(Long duration, Blob content, Date created) {
 		super();
 		this.duration = duration;
 		this.content = content;
 		this.created = created;
+	}
+
+	public List<User> getWatchers() {
+		return watchers;
+	}
+
+	public void setWatchers(List<User> watchers) {
+		this.watchers = watchers;
 	}
 
 	@Override

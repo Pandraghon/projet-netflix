@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Add Series</title>
+</head>
+<body>
+<h1>Add Episodes</h1>
+	<form action="#" th:action="@{/series/addEpisode}" th:object="${episode}"
+		method="post" >
+		<table>
+			<tr>
+				<td>Episode Name :</td>
+				<td><input type="text" th:field="*{titre}"></input></td>
+				<td th:if="${#fields.hasErrors('titre')}" th:errors="*{titre}">Name
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Episode Number :</td>
+				<td><input type="number" th:field="*{episode_number}"></input></td>
+				<td th:if="${#fields.hasErrors('episode_number')}" th:errors="*{episode_number}">Episode
+					Errors</td>
+					
+			</tr>
+			<tr>
+				<td>Description :</td>
+				<td><input type="text" th:field="*{description}"></input></td>
+				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+					Errors</td>
+			</tr>
+			<tr>
+				<td>Saison :</td>
+				<td><input type="number" th:field="*{saison_number}"></input></td>
+				<td th:if="${#fields.hasErrors('saison_number')}" th:errors="*{saison_number}">Saison
+					Errors</td>
+					
+			</tr>
+			
+			<tr>
+			<td>Série :</td>
+				<td><select th:field="*{serie}">
+					<option th:each=" serie : ${serie}"
+							th:text="${serie.media.name}" th:value="${serie.id}"></option>
+						</select></td>
+			</tr>
+	<tr>
+				<td><button type="submit">Add Episode</button></td>
+			</tr>
+
+		</table>
+
+
+	</form>
+	<a th:href="@{/series}">Retour à l'index</a>
+</body>
+</html>

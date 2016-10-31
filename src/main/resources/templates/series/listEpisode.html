@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    
+<head th:include="fragments/head :: head"></head>
+
+<body>
+
+	<header th:include="fragments/header :: header"></header>
+	
+	 <section id="main-container">
+            <article id="movies-container" class="container media-container">
+                <div class="content">
+                    <ul class="media-list" th:each="episode : ${episodes}">
+                        <li class="media-item">
+                            <!--  <a th:href="@{/series/view/{id}(id=${serie.id})}">
+                                <img th:src="@{/images/{image}(image=${serie.media.image})}" />
+                                <div class="media-info">
+                                    <div class="media-title">Elephant Dream</div>
+                                    <div class="media-date">(2006)</div>
+                                </div>
+                            </a>-->
+                        </li>
+                     	</ul>
+                     </div>
+              </article>
+        </section>
+      
+</body>
+</html>

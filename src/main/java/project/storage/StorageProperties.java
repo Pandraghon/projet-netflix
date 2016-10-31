@@ -8,7 +8,9 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
-    private String location = "webflix";
+
+    private String location = "projet-netflix/src/main/resources/images";
+
 
     public String getLocation() {
         return location;
