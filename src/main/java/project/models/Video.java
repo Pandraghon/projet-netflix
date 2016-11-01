@@ -25,19 +25,28 @@ public class Video {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	//@Column(name="video_id")
+
 	private Long id;
 	
-	@NotNull
+	
 	private Long duration;
 	
-	@NotNull
-	private Blob content;
+	
+	private String content;
 	
 	@ManyToMany(mappedBy="seen")
 	private List<User> watchers = new ArrayList<>();
 	
 	private Date created = new Date();
+	
+	public Video() {
+		super();
+	}
+
+	public Video(String content) {
+		super();
+		this.content = content;
+	}
 
 	public Long getId() {
 		return id;
@@ -55,11 +64,11 @@ public class Video {
 		this.duration = duration;
 	}
 
-	public Blob getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(Blob content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
@@ -71,7 +80,7 @@ public class Video {
 		this.created = created;
 	}
 
-	public Video(Long duration, Blob content, Date created) {
+	public Video(Long duration, String content, Date created) {
 		super();
 		this.duration = duration;
 		this.content = content;

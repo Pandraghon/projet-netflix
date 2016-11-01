@@ -1,47 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8"></meta>
-<title>Series list</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    
+<head th:include="fragments/head :: head"></head>
+
 <body>
-	
-<h1>Listes des Séries</h1>
 
-<a th:href="@{/series/add}">Ajouter une série</a>
-
-<div th:if="${#lists.isEmpty(serie)}">
-il n'existe pas de séries dans la base !!!</div>
-    
-    <table>
-    <tr>
-    	<th>ID</th>
-    	<th>name</th>
-    	<th>description</th>
-    	<th>trailer</th>
-    	<th>image name</th>
-    	<th>image</th>
-    	<th>Action</th>
-    	</tr>
-    	
-   
-    	<tr th:each="serie : ${serie}">
-	    	<td th:text="${serie.id}"></td>
-	    	<td th:text="${serie.media.name}"></td>
-	    	<td th:text="${serie.media.description}"></td>
-	    	<td th:text="${serie.media.trailer}"></td>
-	    	<td th:text="${serie.media.image}"></td>
-	    	<td><img th:src= "@{/images/{image}(image=${serie.media.image})}" height="42" width="42" />
-	    	<a th:href="@{/series}">Ouvrir</a>
-	    	</td>
-	    	
-		<td><a th:href="@{/edit/{id}(id=${serie.id})}">Editer</a>
-		<a th:href="@{/delete/{id}(id=${serie.id})}">Supprimer</a>
-		</td>
-		</tr>
-   </table>
-    
-    
-    <a th:href="@{/series}">Retour à l'index</a>
+	<header th:include="fragments/header :: header"></header>
+	 <div class="actions-bar">
+            <a th:href="@{/series/add}" class="action"><i class="fa fa-plus"></i></a>
+    		<a th:href="@{/series/addEpisode}" class="action"><i class="fa fa-plus"></i></a>
+    		
+     </div>
+     
+	 <section id="main-container">
+            <aside class="categories-container">
+                <ul>
+                    <li th:each="category : ${categories}">
+                        <a th:href="@{/series(category=${category})}" th:text="${category.name}"></a>
+                    </li>
+                </ul>
+            </aside>
+            
+            <article id="movies-container" class="container media-container">
+                 <div class="content">
+                <div class="content" th:include="fragments/list_series :: div.content"></div>
+                </div>
+              </article>
+              <a th:href="@{/series/admin}">Admin list</a>
+        </section>
+      
 </body>
 </html>

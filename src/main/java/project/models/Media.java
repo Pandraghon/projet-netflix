@@ -53,8 +53,8 @@ public class Media {
     @NotNull
     private String name;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    
+    private String date;
 
     private String description;
     private String trailer;
@@ -64,7 +64,7 @@ public class Media {
         super();
     }
 
-    public Media(String name, Date date, String description, String trailer, String image) {
+    public Media(String name, String date, String description, String trailer, String image) {
         super();
         this.name = name;
 
@@ -90,11 +90,11 @@ public class Media {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

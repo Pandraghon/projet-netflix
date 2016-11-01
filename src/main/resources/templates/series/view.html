@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    
+<head th:include="fragments/head :: head"></head>
+
+<body>
+
+<header th:include="fragments/header :: header"></header>
+
+<section id="main-container">
+<article id="media-container" class="container" th:style="'background-image:url(' + @{/img/{image}(image=${serie.media.image})} + ');'">
+              
+ <div class="media-data">
+ 	<h2 class="media-title" th:text="${serie.media.name}"></h2>
+    <div class="video-data">
+                        <span class="media-one-data" th:if="not ${#lists.isEmpty(serie.media.categories)}" th:text="${#strings.setJoin(serie.media.categories,', ')}"></span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i><span th:text="${serie.media.date}"></span></span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-clock-o"></i>11 min</span>
+                        <span class="media-one-data">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </div>
+     			<p class="media-description" th:text="${serie.media.description}"></p>
+             
+     			<p class="media-description">
+     				Trailer : 
+     				<a th:href="${serie.media.trailer}"><span th:text="${serie.media.trailer}"></span></a>
+				</p>
+     			
+     			<p class="media-description" >
+     				
+     				<ul> Saisons : 
+						<li th:each=" saison : ${saisons}">
+							<a th:href="@{/series/view/{id}/{saison_number}/listEpisode(id=${serie.id},saison_number=${saison})}"> Saison  <span th:text="${saison}" ></span> </a>
+							
+								</li>
+						</ul>
+     			</p>
+     </div>
+                <div class="media-actions">
+                    <a class="media-action big-action" th:href="@{/videos/view/1}" target="_blank">
+                        <i class="fa fa-play-circle-o"></i> Watch it now
+                    </a>
+                    <a class="media-action small-action" th:href="${serie.media.trailer}" target="_blank">
+                        <i class="fa fa-ticket"></i> Trailer
+                    </a>
+                </div>
+     </article>
+
+	<div><a th:href="@{/series}">Retour à l'index</a>
+	</div>
+	</section>
+</body>
+</html>

@@ -1,11 +1,11 @@
 package project.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,14 +23,14 @@ public class Episode {
 	@NotNull
 	private Long saison_number;
 	
-	@NotNull
+	
 	private Long episode_number;
 	
 	private String titre;
 	
 	private String description;
 	
-	@OneToOne
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="video_id", referencedColumnName="id")
 	private Video video;
 	
@@ -41,12 +41,17 @@ public class Episode {
 	
 	
 	
-	public Episode(Long saison_number, Long episode_number, String titre, String description) {
+	public Episode() {
 		super();
+	}
+
+	public Episode(Long saison_number, Long episode_number, String titre, String description, Serie serie, Video video) {
 		this.saison_number = saison_number;
 		this.episode_number = episode_number;
 		this.titre = titre;
 		this.description = description;
+		this.serie = serie;
+		this.video=video;
 	}
 
 	public Long getId() {
@@ -88,6 +93,23 @@ public class Episode {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public Video getVideo() {
+		return video;
+	}
+
+	public void setVideo(Video video) {
+		this.video = video;
+	}
+
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+	
 	
 	
 }

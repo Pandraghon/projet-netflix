@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+
+<body>
+	<header th:include="fragments/header :: header"></header>
+      <section id="main-container">
+        
+        <form th:action="@{/series/addEpisode}" th:object="${episode}"
+		method="post" enctype="multipart/form-data">
+		
+			<fieldset>
+                    <legend>Ajouter un episode</legend>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{titre}" id="titre" />
+                        <label class="input-label" for="titre">Nom</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('titre')}" th:errors="*{titre}"></span>
+                    </div>
+					
+					<div class="input-group">
+                        <input class="input input-text" type="number" th:field="*{episode_number}" id="episode_number" />
+                        <label class="input-label" for="episode_number">Episode Number</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('episode_number')}" th:errors="*{episode_number}"></span>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="input input-text" type="text" th:field="*{description}" id="description"></textarea>
+                        <label class="input-label" for="description">Description</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="number" th:field="*{saison_number}" id="saison_number" />
+                        <label class="input-label" for="saison_number">Saison Number</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('saison_number')}" th:errors="*{saison_number}"></span>
+                    </div>
+                    <div class="input-group">
+                    <label class="input-label" for="Serie">Série</label>
+                        <select th:field="*{serie}">
+							<option th:each=" serie : ${serie}"
+							th:text="${serie.media.name}" th:value="${serie.id}"></option>
+						</select>
+                    
+                    </div>
+                    
+                    
+                    <div class="input-group">
+                        <input class="input input-text" type="file" name="file" id="video" accept="video/*"/>
+                        <label class="input-label" for="video">Video</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('video')}" th:errors="*{video}"></span>
+                    </div>
+                    
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="form-action">Ajouter Episode</button>
+                    </div>
+         
+		</fieldset>
+
+	</form>
+	<a th:href="@{/series}">Retour à l'index</a>
+	</section>
+	<script th:src="@{/js/form.js}" />
+</body>
+</html>
