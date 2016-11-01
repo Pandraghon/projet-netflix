@@ -1,56 +1,57 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1"></meta>
-<title>Add Series</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+
 <body>
-<h1>Add Episodes</h1>
-	<form action="#" th:action="@{/series/addEpisode}" th:object="${episode}"
+	<header th:include="fragments/header :: header"></header>
+      <section id="main-container">
+        
+        <form th:action="@{/series/addEpisode}" th:object="${episode}"
 		method="post" >
-		<table>
-			<tr>
-				<td>Episode Name :</td>
-				<td><input type="text" th:field="*{titre}"></input></td>
-				<td th:if="${#fields.hasErrors('titre')}" th:errors="*{titre}">Name
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Episode Number :</td>
-				<td><input type="number" th:field="*{episode_number}"></input></td>
-				<td th:if="${#fields.hasErrors('episode_number')}" th:errors="*{episode_number}">Episode
-					Errors</td>
+		
+			<fieldset>
+                    <legend>Ajouter un episode</legend>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{titre}" id="titre" />
+                        <label class="input-label" for="titre">Nom</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('titre')}" th:errors="*{titre}"></span>
+                    </div>
 					
-			</tr>
-			<tr>
-				<td>Description :</td>
-				<td><input type="text" th:field="*{description}"></input></td>
-				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Saison :</td>
-				<td><input type="number" th:field="*{saison_number}"></input></td>
-				<td th:if="${#fields.hasErrors('saison_number')}" th:errors="*{saison_number}">Saison
-					Errors</td>
-					
-			</tr>
-			
-			<tr>
-			<td>Série :</td>
-				<td><select th:field="*{serie}">
-					<option th:each=" serie : ${serie}"
+					<div class="input-group">
+                        <input class="input input-text" type="number" th:field="*{episode_number}" id="episode_number" />
+                        <label class="input-label" for="episode_number">Episode Number</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('episode_number')}" th:errors="*{episode_number}"></span>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
+                        <label class="input-label" for="description">Description</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="number" th:field="*{saison_number}" id="saison_number" />
+                        <label class="input-label" for="saison_number">Saison Number</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('saison_number')}" th:errors="*{saison_number}"></span>
+                    </div>
+                    <div class="input-group">
+                    <label class="input-label" for="Serie">Série</label>
+                        <datalist th:field="*{serie}">
+							<option th:each=" serie : ${serie}"
 							th:text="${serie.media.name}" th:value="${serie.id}"></option>
-						</select></td>
-			</tr>
-	<tr>
-				<td><button type="submit">Add Episode</button></td>
-			</tr>
-
-		</table>
-
+						</datalist>
+                    
+                    
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="form-action">Ajouter Episode</button>
+                    </div>
+         
+		</fieldset>
 
 	</form>
 	<a th:href="@{/series}">Retour à l'index</a>
+	</section>
+	<script th:src="@{/js/form.js}" />
 </body>
 </html>

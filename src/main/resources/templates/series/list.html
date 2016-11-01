@@ -6,25 +6,33 @@
 <body>
 
 	<header th:include="fragments/header :: header"></header>
-	
+	 <div class="actions-bar">
+            <a th:href="@{/series/add}" class="action"><i class="fa fa-plus"></i></a>
+    		<a th:href="@{/series/addEpisode}" class="action"><i class="fa fa-plus"></i></a>
+    		
+     </div>
+     
 	 <section id="main-container">
             <article id="movies-container" class="container media-container">
                 <div class="content">
-                <a th:href="@{/series/add}">Ajouter une série</a>
-                <a th:href="@{/series/addEpisode}">Ajouter episode</a>
+                <div class="no-content" th:if="${#lists.isEmpty(serie)}">Il n'y a aucune série.</div>
+                    
+               <!--  <a th:href="@{/series/add}">Ajouter une série</a>
+                <a th:href="@{/series/addEpisode}">Ajouter episode</a> -->
                     <ul class="media-list" th:each="serie : ${serie}">
                         <li class="media-item">
                             <a th:href="@{/series/view/{id}(id=${serie.id})}">
-                                <img th:src="@{/images/{image}(image=${serie.media.image})}" />
+                                <img th:src="@{/img/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">
-                                    <div class="media-title">Elephant Dream</div>
-                                    <div class="media-date">(2006)</div>
+                                    <div class="media-title"><span th:text="${serie.media.name}"></span></div>
+                                    <div class="media-date">(<span th:text="${serie.media.date}"></span>)</div>
                                 </div>
                             </a>
                         </li>
                      	</ul>
                      </div>
               </article>
+              <a th:href="@{/series/admin}">Admin list</a>
         </section>
       
 </body>

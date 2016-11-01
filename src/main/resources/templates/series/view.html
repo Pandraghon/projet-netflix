@@ -8,8 +8,53 @@
 <header th:include="fragments/header :: header"></header>
 
 <section id="main-container">
-
-<div class="content">
+<article id="media-container" class="container" th:style="'background-image:url(' + @{/img/{image}(image=${serie.media.image})} + ');'">
+              
+ <div class="media-data">
+ 	<h2 class="media-title" th:text="${serie.media.name}"></h2>
+    <div class="video-data">
+                        <span class="media-one-data">Fantastique</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i><span th:text="${serie.media.date}"></span></span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-clock-o"></i>11 min</span>
+                        <span class="media-one-data">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </div>
+     			<p class="media-description" th:text="${serie.media.description}"></p>
+             
+     			<p class="media-description">
+     				Trailer : 
+     				<a th:href="${serie.media.trailer}"><span th:text="${serie.media.trailer}"></span></a>
+				</p>
+     			
+     			<p class="media-description" >
+     				
+     				<ul> Saisons : 
+						<li th:each=" saison : ${saisons}">
+							<a th:href="@{/series/view/{id}/{saison_number}/listEpisode(id=${serie.id},saison_number=${saison})}"> Saison  <span th:text="${saison}" ></span> </a>
+							<!--  <span th:text="${saison}" ></span> : <span th:text="${fruit.price}"></span> €
+		
+								th:text="${saison}" 
+								th:value="${saison}" >-->
+								
+								</li>
+						</ul>
+     			</p>
+     </div>
+                <div class="media-action">
+                    <a th:href="@{/videos/view/1}" target="_blank">
+                        <i class="fa fa-play-circle-o"></i> Watch it now
+                    </a>
+      </div>
+     
+     </article>
+     
+     
+   <!--                  
 	<form action="#" th:action="@{/series/view}" th:object="${serie}"
 		method="post" enctype="multipart/form-data">
 		
@@ -22,7 +67,7 @@
 				<td><span th:text="${serie.media.name}" ></span></td>
 			</tr>
 			
-			<!-- <tr>
+			 <tr>
 			<td>Saisons :</td>
 			<div th:if="${#lists.isEmpty(saisons)}">
 						il n'existe pas d'episodes pour cette série !!!</div>
@@ -34,19 +79,20 @@
 								<a th:href="@{/series}">Retour à l'index</a>
 								</option>
 						</select></td>
-			</tr> -->
+			</tr> 
 			<tr>
-			<td>Saisons :</td>
-			<div th:if="${#lists.isEmpty(saisons)}">
+			 <td>Saisons :</td>
+			<td><div th:if="${#lists.isEmpty(saisons)}">
 						il n'existe pas d'episodes pour cette série !!!</div>
+				</td>
 				<td>
 				<ul>
 						<li th:each=" saison : ${saisons}">
-							<a th:href="@{/series/view/{id}(id=${serie.id})/{saison_number}(saison_number=${saison})/listEpisode}"> Saison  <span th:text="${saison}" ></span> </a>
-							<!--  <span th:text="${saison}" ></span> : <span th:text="${fruit.price}"></span> €
+							<a th:href="@{/series/view/{id}/{saison_number}/listEpisode(id=${serie.id},saison_number=${saison})}"> Saison  <span th:text="${saison}" ></span> </a>
+							 <span th:text="${saison}" ></span> : <span th:text="${fruit.price}"></span> €
 		
 								th:text="${saison}" 
-								th:value="${saison}" >-->
+								th:value="${saison}" >
 								
 								</li>
 						</ul>
@@ -59,21 +105,21 @@
 			</tr>
 			<tr>
 				<td>Trailer :</td>
-				<td><span th:text="${serie.media.trailer}"></span></td>
+				<td><a th:href="${serie.media.trailer}"><span th:text="${serie.media.trailer}"></span></a></td>
 				
 			</tr>
 			
 			<tr>
 				
-				<td><img th:src="@{/images/{image}(image=${serie.media.image})}" weight="60" height="60"/></td>
+				<td><img th:src="@{/img/{image}(image=${serie.media.image})}" weight="60" height="60"/></td>
 				
 			</tr>
 
 		</table>
 
 
-	</form>
-	<a th:href="@{/series}">Retour à l'index</a>
+	</form> -->
+	<div><a th:href="@{/series}">Retour à l'index</a>
 	</div>
 	</section>
 </body>
