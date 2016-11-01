@@ -1,58 +1,18 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1"></meta>
-<title>Visualiser la serie</title>
-</head>
-<body>
-<h1>View Serie</h1>
-
-	<form action="#" th:action="@{/series/viewEpisode}" th:object="${episode}"
-		method="post" enctype="multipart/form-data">
-		
-		
-		
-		<input type="hidden" th:field="*{id}"/> 
-		<table>
-			<tr>
-				<td>Serie Name :</td>
-				<td><span th:text="${serie.media.name}" ></span></td>
-			</tr>
-			
-			<tr>
-			<td>Saisons :</td>
-			<div th:if="${#lists.isEmpty(saisons)}">
-						il n'existe pas d'episodes pour cette série !!!</div>
-				<td><select name="saison">
-						<option th:each=" saison : ${saisons}"
-								
-								th:text="${saison}" 
-								th:value="${saison}" onclick="window.alert('Vous avez selectionne la serie')"></option>
-						</select></td>
-			</tr>
-			
-			<tr>
-				<td>Description :</td>
-				<td><span th:text="${serie.media.description}"></span></td>
-				
-			</tr>
-			<tr>
-				<td>Trailer :</td>
-				<td><span th:text="${serie.media.trailer}"></span></td>
-				
-			</tr>
-			
-			<tr>
-				
-				<td><img th:src="@{/images/{image}(image=${serie.media.image})}" weight="60" height="60"/></td>
-				
-			</tr>
-
-		</table>
-
-
-	</form>
-	<a th:href="@{/series}">Retour à l'index</a>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+            <article id="video-container" class="container">
+                <h2 class="video-title" th:text="${episode.titre}"></h2>
+                <video width="600" height="400" controls="controls">
+                    <source th:src="@{/vid/{video}(video=${video.content})}" type="video/x-msvideo" />
+                    <source th:src="@{/vid/big_buck_bunny_720p_stereo.ogg}" type="audio/ogg" />
+                    Your browser does not support the video tag.
+                </video>
+            </article>
+        </section>
+    </body>
 </html>

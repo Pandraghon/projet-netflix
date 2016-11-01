@@ -8,7 +8,7 @@
       <section id="main-container">
         
         <form th:action="@{/series/addEpisode}" th:object="${episode}"
-		method="post" >
+		method="post" enctype="multipart/form-data">
 		
 			<fieldset>
                     <legend>Ajouter un episode</legend>
@@ -24,7 +24,7 @@
                         <span class="input-error" th:if="${#fields.hasErrors('episode_number')}" th:errors="*{episode_number}"></span>
                     </div>
                     <div class="input-group">
-                        <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
+                        <textarea class="input input-text" type="text" th:field="*{description}" id="description"></textarea>
                         <label class="input-label" for="description">Description</label>
                         <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                     </div>
@@ -35,13 +35,20 @@
                     </div>
                     <div class="input-group">
                     <label class="input-label" for="Serie">Série</label>
-                        <datalist th:field="*{serie}">
+                        <select th:field="*{serie}">
 							<option th:each=" serie : ${serie}"
 							th:text="${serie.media.name}" th:value="${serie.id}"></option>
-						</datalist>
-                    
+						</select>
                     
                     </div>
+                    
+                    
+                    <div class="input-group">
+                        <input class="input input-text" type="file" name="file" id="video" accept="video/*"/>
+                        <label class="input-label" for="video">Video</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('video')}" th:errors="*{video}"></span>
+                    </div>
+                    
                     
                     <div class="form-actions">
                         <button type="submit" class="form-action">Ajouter Episode</button>

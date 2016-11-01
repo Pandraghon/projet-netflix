@@ -1,5 +1,6 @@
 package project.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Episode {
 	
 	private String description;
 	
-	@OneToOne
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="video_id", referencedColumnName="id")
 	private Video video;
 	

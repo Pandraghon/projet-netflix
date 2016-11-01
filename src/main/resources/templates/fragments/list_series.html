@@ -11,7 +11,7 @@
                         <img th:src="@{/img/{image}(image=${serie.media.image})}" />
                         <div class="media-info">
                             <div class="media-title" th:text="${serie.media.name}"></div>
-                            <div class="media-date">(2006)</div>
+                            <div class="media-date">(<span th:text="${serie.media.date}"></span>)</div>
                         </div>
                     </a>
                 </li>

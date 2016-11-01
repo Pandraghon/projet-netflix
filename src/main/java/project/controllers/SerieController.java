@@ -22,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import project.models.Category;
 import project.models.Episode;
 import project.models.Media;
 import project.models.Serie;
+import project.models.Video;
+import project.repositories.CategoryRepository;
 import project.repositories.EpisodeRepository;
 import project.repositories.MediaRepository;
 import project.repositories.SerieRepository;
+import project.repositories.VideoRepository;
 import project.storage.StorageService;
 
 @Controller
@@ -40,6 +44,7 @@ public class SerieController {
 	
 	private final String PAGE_INDEX 	= SUBFOLDER + "index";
 	private final String PAGE_VIEW 		= SUBFOLDER + "view";
+	private final String PAGE_VIEW_EPISODE 		= SUBFOLDER + "viewEpisode";
 	private final String PAGE_LIST 		= SUBFOLDER + "list";
 	private final String PAGE_EDIT 		= SUBFOLDER + "edit";
 	private final String PAGE_ADD 		= SUBFOLDER + "add";
@@ -60,6 +65,14 @@ public class SerieController {
 	@Autowired
 	private EpisodeRepository EpisodeRepository;
 	
+	
+	@Autowired
+	private CategoryRepository CategoryRepository;
+	
+	
+	@Autowired
+	private VideoRepository VideoRepository;
+	
 	@Autowired
 	private HttpServletRequest request;
 	
@@ -70,11 +83,25 @@ public class SerieController {
 	  
 	  
 	@GetMapping({"","/"})
-	public String listSeries(Model model)
+	public String listSeries(Model model, @RequestParam(value="category", required=false) String category)
 	{
-		Iterable<Serie> list = SerieRepository.findAll();
+		 if(category != null) {
+             Category cat = CategoryRepository.findByNameIgnoreCase(category);
+             if(cat == null) {
+                 model.addAttribute("series", (Iterable<Serie>) SerieRepository.findAll());
+             } else {
+                 model.addAttribute("series", (Iterable<Serie>) SerieRepository.findByMedia_Categories(cat));
+             }
+         }
+		 else
+		 {
+			 Iterable<Serie> list = SerieRepository.findAll();
 
-		model.addAttribute("serie",list);
+				model.addAttribute("series",list);
+		 }
+		
+		  model.addAttribute("categories", (Iterable<Category>) CategoryRepository.findAll());
+		
 
 		return PAGE_LIST;
 		
@@ -103,6 +130,19 @@ public class SerieController {
 		model.addAttribute("saisons", saisons);
 		
 		return PAGE_VIEW;
+	}
+	
+	
+	@GetMapping("/viewEpisode/{id}")
+	public String viewEpisodeInformations(@PathVariable("id") Long id,Model model) {
+		
+		Video video = VideoRepository.findOne(id);
+		Episode episode = EpisodeRepository.findByVideo(video);
+		
+		model.addAttribute("video", video);
+		model.addAttribute("episode", episode);
+		
+		return PAGE_VIEW_EPISODE;
 	}
 	
 	@GetMapping("/view/{id:[1-9]+}/{saison_number:[1-9]+}/listEpisode")
@@ -140,9 +180,10 @@ public class SerieController {
 	}
 	
 	@PostMapping("/addEpisode")
-	public String addEpisode(@Valid Episode episode, BindingResult bindingresult) {
+	public String addEpisode(@Valid Episode episode, BindingResult bindingresult ,@RequestParam("file") MultipartFile video,RedirectAttributes redirectAttributes) {
 		
 		
+		System.out.println("DEBUT POST ADD EPISODE");
 
 		if(bindingresult.hasErrors())
 		{
@@ -150,8 +191,30 @@ public class SerieController {
 			return PAGE_ADD_EPISODE;
 		}
 		
-		EpisodeRepository.save(episode);
+		Episode saveEpisode = EpisodeRepository.save(episode);
 		
+        String filePath = "";
+        if (!video.isEmpty()) {
+            try {
+                String uploadsDir = "/vid/";
+                String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+                if (!new File(realPathtoUploads).exists()) {
+                    new File(realPathtoUploads).mkdir();
+                }
+
+                filePath = Long.toString(saveEpisode.getId()) + "." + FilenameUtils.getExtension(video.getOriginalFilename());
+                String path = realPathtoUploads + filePath;
+                File dest = new File(path);
+                video.transferTo(dest);
+            } catch (IOException | IllegalStateException e) {
+
+            }
+        }
+		
+        Video newvideo = new Video(filePath);
+        saveEpisode.setVideo(newvideo);
+		
+		VideoRepository.save(newvideo);
 		
 		Serie serie = episode.getSerie();
 		List<Episode> listEpisodes = serie.getEpisodes();
@@ -170,13 +233,13 @@ public class SerieController {
     public String addSerieForm(Model model) {
         model.addAttribute("serie", new Serie());
         model.addAttribute("media", new Media());
-
+        model.addAttribute("categories", (Iterable<Category>) CategoryRepository.findAll());
         return PAGE_ADD;
     }
 
 	
     @PostMapping("/add")
-    public String addSerie(@Valid Media media, BindingResult bindingresult, @RequestParam("file") MultipartFile image,
+    public String addSerie(@Valid Media media, BindingResult bindingresult, @RequestParam("file") MultipartFile image,@RequestParam("categ") String[] categories,
             RedirectAttributes redirectAttributes) {
 
         if (bindingresult.hasErrors()) {
@@ -184,6 +247,14 @@ public class SerieController {
             return PAGE_ADD;
         }
 
+        for(String categ : categories) {
+            Category category = CategoryRepository.findByName(categ);
+            if(category == null) {
+                category = CategoryRepository.save(new Category(categ));
+            }
+            media.getCategories().add(category);
+        }
+        
         Media saveMedia = MediaRepository.save(media);
         String filePath = "";
         if (!image.isEmpty()) {

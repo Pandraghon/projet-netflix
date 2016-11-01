@@ -28,10 +28,10 @@ public class Video {
 
 	private Long id;
 	
-	@NotNull
+	
 	private Long duration;
 	
-	@NotNull
+	
 	private String content;
 	
 	@ManyToMany(mappedBy="seen")
@@ -41,6 +41,11 @@ public class Video {
 	
 	public Video() {
 		super();
+	}
+
+	public Video(String content) {
+		super();
+		this.content = content;
 	}
 
 	public Long getId() {
