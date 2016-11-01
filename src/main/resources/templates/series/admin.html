@@ -21,20 +21,20 @@
                 <a th:href="@{/series/addEpisode}">Ajouter episode</a> -->
                     <ul class="media-list" th:each="serie : ${serie}">
                         <li class="media-item">
-                            <a th:href="@{/series/view/{id}(id=${serie.id})}">
+                            <a>
                                 <img th:src="@{/img/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">
-                                    <div class="media-title"><span th:text="${serie.media.name}"></span></div>
-                                    <div class="media-date">(<span th:text="${serie.media.date}"></span>)</div>
-                                   <!--  <div><span th:href="@{/edit/{id}(id=${serie.media.id})}">Editer</span></div>
-                                    <div><span th:href="@{/delete/{id}(id=${serie.media.id})}">Supprimer</span></div>
-                                 	-->
+                                    <div class="media-title"><a  th:href="@{/series/view/{id}(id=${serie.id})}"><span th:text="${serie.media.name}"></span></a></div>
+                                    <div class="media-date">(<a  th:href="@{/series/view/{id}(id=${serie.id})}"><span th:text="${serie.media.date}"></span></a>)</div>
+                                   <div><a th:href="@{/series/edit/{id}(id=${serie.media.id})}">Editer</a></div>
+                                    <div><a th:href="@{/series/delete/{id}(id=${serie.media.id})}">Supprimer</a></div>
+                                 	
                                 </div>
                                 
                             </a>
-                            <a><div><span th:href="@{/series/edit/{id}(id=${serie.media.id})}">Editer</span></div>
+                            <!--  <a><div><span th:href="@{/series/edit/{id}(id=${serie.media.id})}">Editer</span></div>
                                     <div><span th:href="@{/series/delete/{id}(id=${serie.media.id})}">Supprimer</span></div>
-                               </a> 
+                               </a> -->
                         </li>
                      	</ul>
                      </div>

@@ -41,11 +41,11 @@ public class SerieController {
 	private final String PAGE_INDEX 	= SUBFOLDER + "index";
 	private final String PAGE_VIEW 		= SUBFOLDER + "view";
 	private final String PAGE_LIST 		= SUBFOLDER + "list";
-	private final String PAGE_EDIT 		= SUBFOLDER + "/edit";
+	private final String PAGE_EDIT 		= SUBFOLDER + "edit";
 	private final String PAGE_ADD 		= SUBFOLDER + "add";
 	private final String PAGE_ADD_EPISODE 		= SUBFOLDER + "addEpisode";
 	private final String PAGE_LIST_EPISODE 		= SUBFOLDER + "listEpisode";
-	private final String PAGE_DELETE 	= SUBFOLDER + "/delete";
+	private final String PAGE_DELETE 	= SUBFOLDER + "delete";
 	private final String PAGE_ADMIN	= SUBFOLDER + "admin";
 	
 	private final StorageService storageService;
@@ -210,8 +210,6 @@ public class SerieController {
         serie.setMedia(media);
         Serie saveSerie = SerieRepository.save(serie);
 
-        System.out.println("NEW SAVED MEDIA WITH ID : " + saveMedia.getId() + " NAME = " + saveMedia.getName() + " IMAGE = " + saveMedia.getImage());
-        System.out.println("NEW SAVED SERIE WITH ID : " + saveSerie.getMedia().getId() + " NAME = " + saveSerie.getMedia().getName() + " IMAGE = " + saveSerie.getMedia().getImage());
 
         return "redirect:/series";
     }
@@ -249,10 +247,14 @@ public class SerieController {
 		
 		
 		
-		Media savemedia = MediaRepository.save(media);
+		Media saveMedia = MediaRepository.save(media);
 		Serie serie = SerieRepository.findOne(media.getId());
-		serie.setMedia(savemedia);
-		SerieRepository.save(serie);
+		serie.setMedia(saveMedia);
+		Serie saveSerie = SerieRepository.save(serie);
+		
+        System.out.println("NEW SAVED MEDIA WITH ID : " + saveMedia.getId() + " NAME = " + saveMedia.getName() + " IMAGE = " + saveMedia.getImage());
+        System.out.println("NEW SAVED SERIE WITH ID : " + saveSerie.getMedia().getId() + " NAME = " + saveSerie.getMedia().getName() + " IMAGE = " + saveSerie.getMedia().getImage());
+
 		
 		return "redirect:/series/admin"; 
 		

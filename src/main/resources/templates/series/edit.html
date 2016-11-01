@@ -1,14 +1,49 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1"></meta>
-<title>Modifier les series</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+  
 <body>
-<h1>Edit Series</h1>
-	<form action="#" th:action="@{/series/edit}" th:object="${media}"
+<header th:include="fragments/header :: header"></header>
+  <section id="main-container">
+  
+	<form th:action="@{/series/edit}" th:object="${media}"
 		method="post" enctype="multipart/form-data">
 		<input type="hidden" th:field="*{id}"/> 
+		<fieldset>
+			 <legend>Modifier une série</legend>
+				<div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{name}" id="name" />
+                        <label class="input-label" for="name">Nom</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            	</div>
+            	<div class="input-group">
+                        <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
+                        <label class="input-label" for="description">Description</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="input input-text" type="text" th:field="*{date}" id="date"></textarea>
+                        <label class="input-label" for="date">Date</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="url" th:field="*{trailer}" id="trailer" />
+                        <label class="input-label" for="trailer">Trailer</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="hidden" th:field="*{image}" id="image" />
+                        
+                        <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+            	</div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="form-action">Enregistrer</button>
+                    </div>
+                    <a th:href="@{/series}">Retour à l'index</a>
+			</fieldset>
+		<!-- 
 		<table>
 			<tr>
 				<td>Serie Name :</td>
@@ -41,9 +76,10 @@
 			</tr>
 
 		</table>
-
+		 -->
 
 	</form>
-	<a th:href="@{/series}">Retour à l'index</a>
+	</section>
+	 <script th:src="@{/js/form.js}" />
 </body>
 </html>
