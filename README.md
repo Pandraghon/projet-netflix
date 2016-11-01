@@ -10,7 +10,7 @@ Le contenu de l'application se base sur une liste de films "open-source" : [List
 
 * Albasser Sylvain : [Pandraghon][]
 * Neghouche Akim : [Akim0992][]
-* Raji Ines : [InesMiage][]
+* Rajiallah Ines : [InesMiage][]
 
 ## Installation
 
