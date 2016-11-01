@@ -35,9 +35,10 @@
                         <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
                     </div>
                     <div class="input-group">
-                        <input class="input input-text last-input" list="categories" id="categories[]" />
+                        <input class="input input-text last-input" list="categList" id="categories[]" />
                         <label class="input-label" for="categories[]">Catégories</label>
-                        <datalist id="categories">
+                        <span class="input-error" th:if="${#fields.hasErrors('categories')}" th:errors="*{categories}"></span>
+                        <datalist id="categList">
                             <option value="Aventure" />
                             <option value="Fantastique" />
                             <option value="Romance" />

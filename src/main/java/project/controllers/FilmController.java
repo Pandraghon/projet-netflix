@@ -3,6 +3,7 @@ package project.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.Valid;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.apache.commons.io.FilenameUtils;
+import project.models.Category;
 
 import project.models.Film;
 import project.models.Media;
+import project.repositories.CategoryRepository;
 import project.repositories.FilmRepository;
 import project.repositories.MediaRepository;
 
@@ -46,10 +49,23 @@ public class FilmController {
 	
 	@Autowired
 	private MediaRepository mediaRep;
+	
+	@Autowired
+	private CategoryRepository categRep;
 
 	@GetMapping({ "", "/" })
-	public String listFilms(Model model) {
-		model.addAttribute("film", (Iterable<Film>) filmRep.findAll());
+	public String listFilms(Model model, @RequestParam(value="category", required=false) String category) {
+                if(category != null) {
+                    Category cat = categRep.findByNameIgnoreCase(category);
+                    if(cat == null) {
+                        model.addAttribute("films", (Iterable<Film>) filmRep.findAll());
+                    } else {
+                        model.addAttribute("films", (Iterable<Film>) filmRep.findByMedia_Categories(cat));
+                    }
+                } else {
+                    model.addAttribute("films", (Iterable<Film>) filmRep.findAll());
+                }
+                model.addAttribute("categories", (Iterable<Category>) categRep.findAll());
 		return PAGE_LIST;
 	}
 	
@@ -76,21 +92,31 @@ public class FilmController {
 	public String add(Model model) {
 		model.addAttribute("film",new Film());
 		model.addAttribute("media",new Media());
+		model.addAttribute("categories", (Iterable<Category>) categRep.findAll());
 			
 		return PAGE_ADD;
 	}
 	
 	@PostMapping("/add")
-	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image,
+	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image, @RequestParam("categ") String[] categories,
             RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors())
 		{
 			System.out.println("erreeeeur");
-			return "PAGE_ADD";
+			return PAGE_ADD;
 		}
+                
+                for(String categ : categories) {
+                    Category category = categRep.findByName(categ);
+                    if(category == null) {
+                        category = categRep.save(new Category(categ));
+                    }
+                    media.getCategories().add(category);
+                }
 		
 		Media saveMedia = mediaRep.save(media);
+                
                 String filePath = "";
                 if (!image.isEmpty()) {
                     try {
