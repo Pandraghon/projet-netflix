@@ -12,6 +12,7 @@
                 <div class="content">
                     <ul class="media-list" th:each="episode : ${episodes}">
                         <li class="media-item">
+                            <span th:text="${episode.titre}"></span>
                             <!--  <a th:href="@{/series/view/{id}(id=${serie.id})}">
                                 <img th:src="@{/images/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">

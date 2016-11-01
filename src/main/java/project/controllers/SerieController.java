@@ -41,11 +41,12 @@ public class SerieController {
 	private final String PAGE_INDEX 	= SUBFOLDER + "index";
 	private final String PAGE_VIEW 		= SUBFOLDER + "view";
 	private final String PAGE_LIST 		= SUBFOLDER + "list";
-	private final String PAGE_EDIT 		= SUBFOLDER + "edit";
+	private final String PAGE_EDIT 		= SUBFOLDER + "/edit";
 	private final String PAGE_ADD 		= SUBFOLDER + "add";
 	private final String PAGE_ADD_EPISODE 		= SUBFOLDER + "addEpisode";
 	private final String PAGE_LIST_EPISODE 		= SUBFOLDER + "listEpisode";
-	private final String PAGE_DELETE 	= SUBFOLDER + "delete";
+	private final String PAGE_DELETE 	= SUBFOLDER + "/delete";
+	private final String PAGE_ADMIN	= SUBFOLDER + "admin";
 	
 	private final StorageService storageService;
 	
@@ -78,6 +79,16 @@ public class SerieController {
 		return PAGE_LIST;
 		
 	}
+	@GetMapping("/admin")
+	public String listAdmin(Model model)
+	{
+		Iterable<Serie> list = SerieRepository.findAll();
+
+		model.addAttribute("serie",list);
+
+		return PAGE_ADMIN;
+		
+	}
 	
 	@GetMapping("/view/{id}")
 	public String viewSerieInformations(@PathVariable("id") Long id,Model model) {
@@ -88,15 +99,13 @@ public class SerieController {
 		model.addAttribute("media", media);
 		
 		List<Long> saisons = serie.listeSaisons();
-		/*List<Episode> episodes = serie.getEpisodes();
-		model.addAttribute("episode", episodes);*/
 		
 		model.addAttribute("saisons", saisons);
 		
 		return PAGE_VIEW;
 	}
 	
-	@GetMapping("/view/{id}/{saison_number}/listEpisode")
+	@GetMapping("/view/{id:[1-9]+}/{saison_number:[1-9]+}/listEpisode")
 	public String listEpisodes(@PathVariable("id") Long id,@PathVariable("saison_number") Long saison_number, Model model) {
 		
 		Serie serie = SerieRepository.findOne(id);
@@ -245,7 +254,7 @@ public class SerieController {
 		serie.setMedia(savemedia);
 		SerieRepository.save(serie);
 		
-		return "redirect:/series"; 
+		return "redirect:/series/admin"; 
 		
 	}
 	

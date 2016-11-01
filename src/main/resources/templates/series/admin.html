@@ -4,68 +4,43 @@
 <head th:include="fragments/head :: head"></head>
 
 <body>
-	<header th:include="fragments/header :: header"></header>
-	
-	 <section id="main-container">
-            
-            <article id="presentation" class="container">
-                <h2>Presentation</h2>
-                <div class="content">
-                    <h1>Listes des Séries</h1>
 
-						<a th:href="@{/series/add}">Ajouter une série</a>
-						<a th:href="@{/series/addEpisode}">Ajouter un episode</a>
-						<div th:if="${#lists.isEmpty(serie)}">
-						il n'existe pas de séries dans la base !!!</div>
-						    
-						    <table>
-						    <tr>
-						    	<th>ID</th>
-						    	<th>name</th>
-						    	<th>description</th>
-						    	<th>trailer</th>
-						    	<th>image name</th>
-						    	<th>image</th>
-						    	<th>Action</th>
-						    </tr>
-						    	
-   
-				    	<tr th:each="serie : ${serie}">
-					    	<td th:text="${serie.media.id}"></td>
-					    	<td th:text="${serie.media.name}"></td>
-					    	<td th:text="${serie.media.description}"></td>
-					    	<td th:text="${serie.media.trailer}"></td>
-					    	<td><a th:href="@{(${serie.media.trailer})}">Trailer</a></td>
-					    	<td th:text="${serie.media.image}"></td>
-					    	<td><img th:src= "@{/images/{image}(image=${serie.media.image})}" height="60" width="60" />
-					    	<a th:href="@{/series}">Ouvrir</a>
-					    	</td>
-	    	
-						<td><a th:href="@{/series/edit/{id}(id=${serie.id})}">Editer</a>
-						<a th:href="@{/series/delete/{id}(id=${serie.id})}">Supprimer</a>
-						</td>
-						</tr>
-				   </table>
-               </div>
-            </article>
-            
+	<header th:include="fragments/header :: header"></header>
+	 <div class="actions-bar">
+            <a th:href="@{/series/add}" class="action"><i class="fa fa-plus"></i></a>
+    		<a th:href="@{/series/addEpisode}" class="action"><i class="fa fa-plus"></i></a>
+    		
+     </div>
+     
+	 <section id="main-container">
             <article id="movies-container" class="container media-container">
                 <div class="content">
+                <div class="no-content" th:if="${#lists.isEmpty(serie)}">Il n'y a aucune série.</div>
+                    
+               <!--  <a th:href="@{/series/add}">Ajouter une série</a>
+                <a th:href="@{/series/addEpisode}">Ajouter episode</a> -->
                     <ul class="media-list" th:each="serie : ${serie}">
                         <li class="media-item">
-                            <a th:href="@{films/view/1}">
-                                <img th:src="@{/images/{image}(image=${serie.media.image})}" height="60" width="60" />
+                            <a th:href="@{/series/view/{id}(id=${serie.id})}">
+                                <img th:src="@{/img/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">
-                                    <div class="media-title">Elephant Dream</div>
-                                    <div class="media-date">(2006)</div>
+                                    <div class="media-title"><span th:text="${serie.media.name}"></span></div>
+                                    <div class="media-date">(<span th:text="${serie.media.date}"></span>)</div>
+                                   <!--  <div><span th:href="@{/edit/{id}(id=${serie.media.id})}">Editer</span></div>
+                                    <div><span th:href="@{/delete/{id}(id=${serie.media.id})}">Supprimer</span></div>
+                                 	-->
                                 </div>
+                                
                             </a>
+                            <a><div><span th:href="@{/series/edit/{id}(id=${serie.media.id})}">Editer</span></div>
+                                    <div><span th:href="@{/series/delete/{id}(id=${serie.media.id})}">Supprimer</span></div>
+                               </a> 
                         </li>
                      	</ul>
                      </div>
               </article>
+              <a th:href="@{/series}">Retour à l'index</a>
         </section>
-                        
-	
+      
 </body>
 </html>

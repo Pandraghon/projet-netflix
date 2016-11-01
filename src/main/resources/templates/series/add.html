@@ -1,45 +1,60 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1"></meta>
-<title>Add Series</title>
-</head>
-<body>
-<h1>Add Series</h1>
-	<form action="#" th:action="@{/series/add}" th:object="${media}"
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head th:include="fragments/head :: head"></head>
+ 
+ <body>
+  <header th:include="fragments/header :: header"></header>
+  <section id="main-container">
+            
+    <form th:action="@{/series/add}" th:object="${media}"
 		method="post" enctype="multipart/form-data">
-		<table>
-			<tr>
-				<td>Serie Name :</td>
-				<td><input type="text" th:field="*{name}"></input></td>
-				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
-					Errors</td>
-			</tr>
-
-			<tr>
-				<td>Description :</td>
-				<td><input type="text" th:field="*{description}"></input></td>
-				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Trailer :</td>
-				<td><input type="text" th:field="*{trailer}"></input></td>
-				<td th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}">Trailer
-					Errors</td>
-			</tr>
-			<tr>
-				<td>Serie Image :</td>
-				<td><input type="file" name="file" accept="image/*"/></td>
-			</tr>
-			<tr>
-				<td><button type="submit">Add Serie</button></td>
-			</tr>
-
-		</table>
+		<fieldset>
+                    <legend>CrÃ©er une série</legend>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{name}" id="name" />
+                        <label class="input-label" for="name">Nom</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            		</div>
+			        <div class="input-group">
+                        <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
+                        <label class="input-label" for="description">Description</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="input-group">
+                        <textarea class="input input-text" type="text" th:field="*{date}" id="date"></textarea>
+                        <label class="input-label" for="date">Date</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="url" th:field="*{trailer}" id="trailer" />
+                        <label class="input-label" for="trailer">Trailer</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text" type="file" name="file" id="image" accept="image/*"/>
+                        <label class="input-label" for="image">Image</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+                    </div>
+                    <div class="input-group">
+                        <input class="input input-text last-input" list="categories" id="categories[]" />
+                        <label class="input-label" for="categories[]">CatÃ©gories</label>
+                        <datalist id="categories">
+                            <option value="Aventure" />
+                            <option value="Fantastique" />
+                            <option value="Romance" />
+                            <option value="Historique" />
+                        </datalist>
+                    </div>
+					<div class="form-actions">
+                        <button type="submit" class="form-action">Enregistrer</button>
+                    </div>
+                    <a th:href="@{/series}">Retour à l'index</a>
+			</fieldset>
 
 
 	</form>
-	<a th:href="@{/series}">Retour à l'index</a>
+	</section>
+	 <script th:src="@{/js/form.js}" />
 </body>
 </html>
