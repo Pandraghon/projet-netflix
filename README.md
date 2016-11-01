@@ -8,9 +8,9 @@ Le contenu de l'application se base sur une liste de films "open-source" : [List
 
 ## Equipe
 
-* Albasser Sylvain : [Pandraghon][]
-* Neghouche Akim : [Akim0992][]
-* Raji Ines : [InesMiage][]
+* Albasser Sylvain : @Pandraghon
+* Neghouche Akim : @Akim0992
+* Raji Ines : @InesMiage
 
 ## Installation
 
@@ -38,6 +38,40 @@ ou [télechargez le ZIP][ZIP]
 ### Compilation
 
 `Run As... > Maven Build` Goals : `spring-boot:run`
+
+## Organisation des fichiers
+
+```
+.
++-- src/main/
+|   +-- java/project/
+|   |   +-- controllers/
+|   |   |   +-- // ...
+|   |   +-- models/
+|   |   |   +-- // ...
+|   |   +-- repositories/
+|   |   |   +-- // ...
+|   |   +-- Application.java
+|   +-- resources/
+|   |   +-- static/
+|   |   |   +-- css/
+|   |   |   |   +-- // ...
+|   |   |   +-- img/
+|   |   |   |   +-- // ...
+|   |   |   +-- js/
+|   |   |   |   +-- // ...
+|   |   |   +-- sass/
+|   |   |   |   +-- // ...
+|   |   |   +-- vid/
+|   |   |   |   +-- // ...
+|   |   +-- templates/
+|   |   |   +-- fragments/
+|   |   |   |   +-- // ...
+|   |   |   +-- // ...
+|   |   +-- application.properties
++-- config.rb
++-- pom.xml
+```
 
 
 [Netflix]: https://www.netflix.com
