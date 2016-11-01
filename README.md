@@ -8,9 +8,9 @@ Le contenu de l'application se base sur une liste de films "open-source" : [List
 
 ## Equipe
 
-* Albasser Sylvain : @Pandraghon
-* Neghouche Akim : @Akim0992
-* Raji Ines : @InesMiage
+* Albasser Sylvain : [Pandraghon][]
+* Neghouche Akim : [Akim0992][]
+* Raji Ines : [InesMiage][]
 
 ## Installation
 
@@ -73,6 +73,18 @@ ou [télechargez le ZIP][ZIP]
 +-- pom.xml
 ```
 
+### CSS
+
+Pour réaliser le style de ce projet, le framework Sass [Compass] a été utilisé.  
+La configuration du projet pour Compass se trouve dans le fichier [config.rb](config.rb).  
+Pour ajouter ou modifier du style, cela se fait dans le dossier [sass/](src/main/resources/sass/). Pour générer les fichiers CSS finaux, il faut exécuter Compass dans le dossier où se trouve le fichier de configuration (ici, à la racine du projet).
+
+## Documentation
+
+* [Java JSE 8 Documentation][]
+* [Spring Documentation][]
+* [Thymeleaf Documentation][]
+
 
 [Netflix]: https://www.netflix.com
 [List of open-source films]: https://en.wikipedia.org/wiki/List_of_open-source_films
@@ -82,3 +94,7 @@ ou [télechargez le ZIP][ZIP]
 [Git]: http://help.github.com/set-up-git-redirect
 [JDK8 build]: http://www.oracle.com/technetwork/java/javase/downloads
 [ZIP]: https://github.com/Pandraghon/projet-netflix/archive/master.zip
+[Compass]: http://compass-style.org/
+[Java JSE 8 Documentation]: https://docs.oracle.com/javase/8/docs/api/
+[Spring Documentation]: https://spring.io/docs
+[Thymeleaf Documentation]: http://www.thymeleaf.org/documentation.html
