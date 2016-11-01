@@ -21,11 +21,17 @@ public class Category implements java.io.Serializable {
     private Long id;
 
     @Column(unique = true)
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 350)
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Set<Media> media = new HashSet<>();
+    
+    public Category() {}
+    
+    public Category(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -41,5 +47,18 @@ public class Category implements java.io.Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Media> getMedia() {
+        return media;
+    }
+
+    public void setMedia(Set<Media> media) {
+        this.media = media;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
     }
 }
