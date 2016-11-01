@@ -77,7 +77,7 @@ ou [télechargez le ZIP][ZIP]
 
 Pour réaliser le style de ce projet, le framework Sass [Compass] a été utilisé.  
 La configuration du projet pour Compass se trouve dans le fichier [config.rb](/config.rb).  
-Pour ajouter ou modifier du style, cela se fait dans le dossier [sass/](/src/main/resources/sass/). Pour générer les fichiers CSS finaux, il faut exécuter Compass dans le dossier où se trouve le fichier de configuration (ici, à la racine du projet).
+Pour ajouter ou modifier du style, cela se fait dans le dossier [sass/](../tree/master/src/main/resources/static/sass). Pour générer les fichiers CSS finaux, il faut exécuter Compass dans le dossier où se trouve le fichier de configuration (ici, à la racine du projet).
 
 ## Documentation
 
