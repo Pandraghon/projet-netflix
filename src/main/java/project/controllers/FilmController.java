@@ -89,7 +89,18 @@ public class FilmController {
         if(film == null) return "redirect:/" + SUBFOLDER;
         User user = userRep.findOne((Long) session.getAttribute("id"));
         user.getWanted().add(film.getMedia());
+        userRep.save(user);
         return "redirect:/films/view/" + Long.toString(id);
+    }
+    
+    @GetMapping("/watchlist")
+    public String watchlist(HttpSession session, Model model) {
+        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+            session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/users/login";
+        }
+        model.addAttribute("films", filmRep.findByMedia_Wanters(userRep.findOne((Long) session.getAttribute("id"))));
+        return PAGE_LIST;
     }
 
     @GetMapping("/view/{id}")

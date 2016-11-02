@@ -13,7 +13,7 @@
             </nav>
             <nav id="secondary-nav">
                 <ul>
-                    <li><a href=""><i class="fa fa-fw fa-heart" title="Bookmarks"></i></a></li>
+                    <li th:if="${session.id} != null"><a th:href="@{/films/watchlist}"><i class="fa fa-fw fa-heart" title="Bookmarks"></i></a></li>
                     <li th:if="${session.id} != null"><a th:href="@{/users/logout}"><i class="fa fa-fw fa-sign-out" title="Sign Out"></i></a></li>
                     <li th:if="${session.id} == null"><a th:href="@{/users/login}"><i class="fa fa-fw fa-sign-in" title="Sign In"></i></a></li>
                     <li th:if="${session.id} == null"><a th:href="@{/users/signup}"><i class="fa fa-fw fa-user-plus" title="Create Account"></i></a></li>

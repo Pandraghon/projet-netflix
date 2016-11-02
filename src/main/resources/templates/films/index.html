@@ -8,7 +8,7 @@
             <a th:href="@{/films/add}" class="action"><i class="fa fa-plus"></i></a>
         </div>
         <section id="main-container">
-            <aside class="categories-container">
+            <aside th:if="${categories} != null" class="categories-container">
                 <ul>
                     <li th:each="category : ${categories}">
                         <a th:href="@{/films(category=${category})}" th:text="${category.name}"></a>

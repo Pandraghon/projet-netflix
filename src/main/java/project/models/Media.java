@@ -131,4 +131,14 @@ public class Media {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
+    public List<User> getWanters() {
+        return wanters;
+    }
+
+    public void setWanters(List<User> wanters) {
+        this.wanters = wanters;
+    }
+    
+    
 }
