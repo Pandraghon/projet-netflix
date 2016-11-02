@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8" />
-<title>Insert title here</title>
+<meta charset="ISO-8859-1"/>
+<title>Mes favoris</title>
 </head>
 <body>
+
+<h1> Liste des utilisateurs </h1>
+
+
+<table class="table table-bordered">
+<tr>
+	<td>id</td>
+	<td>Nom</td>
+	<td>login</td>
+	<td> password</td>
+</tr>
+<tr th:each="user : ${users}" >
+	<td th:text="${user.id}"></td>
+	<td th:text="${user.username}"></td>
+	<td th:text="${user.email}"></td>
+	<td th:text="${user.password}"></td>
+	<td> <a th:href = "@{/edit/{id}(id = ${user.id})}">modifier </a> | <a th:href = "@{/delete/{id}(id = ${user.id})}"> supprimer</a></td>
+</tr>
+</table>
+
 
 </body>
 </html>

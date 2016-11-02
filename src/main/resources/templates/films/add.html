@@ -34,6 +34,11 @@
                         <label class="input-label" for="image">Image</label>
                         <span class="input-error" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
                     </div>
+                    <!--<div class="input-group">
+                        <input class="input input-text" type="file" name="fileVideo" id="video" accept="vid/*"/>
+                        <label class="input-label" for="video">Image</label>
+                        <span class="input-error" th:if="${#fields.hasErrors('video')}" th:errors="*{video}"></span>
+                    </div>-->
                     <div class="input-group">
                         <input class="input input-text" type="file" name="video" id="video" accept="video/*"/>
                         <label class="input-label" for="video">Video</label>
