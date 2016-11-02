@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
+    <head th:include="fragments/head :: head">
         <title>Spring Security Example </title>
         <span th:text="${session.login}"/>
     </head>
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
+    <header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+		
         <form th:action="@{/users/login}" th:object="${user}"  method="post">
-            <div><label> Nom d'utilisateur : <input type="text" name="username" th:field="*{username}"/> <span th:text="${session.msgerreurlogin}"/></label> </div>
-            <div><label> Password: <input type="password" name="password" th:field="*{password}"/><span th:text="${session.msgerreurmdp}"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+             <fieldset>
+                    <legend>Connexion</legend>
+            
+            <div class="input-group">
+            
+	            <input  class="input input-text" type="text" name="username" th:field="*{username}"/> 
+	            <label  class="input-label" for="username" > Nom d'utilisateur : </label> 
+	            <span class="input-error" th:text="${session.msgerreurlogin}"></span>
+            </div>
+            <div class="input-group">
+	            
+	            <input  class="input input-text" type="password" name="password" th:field="*{password}"/>
+	            <label  class="input-label"  for="password"  > Password : </label>
+	            <span class="input-error" th:text="${session.msgerreurmdp}"/> 
+	            
+            </div>
+            <div class="form-actions">
+                        <button type="submit" class="form-action">Enregistrer</button>
+                    </div>
+            </fieldset>
         </form>
+        </section>
     </body>
 </html>

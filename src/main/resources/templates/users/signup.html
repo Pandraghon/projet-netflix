@@ -1,13 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8" />
-        <title>Insert title here</title>
-        
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head th:include="fragments/head :: head">
     </head>
     <body>
-
-        <form action="#" th:action="@{/users/signup}" th:object="${user}" method="post">
+		<header th:include="fragments/header :: header"></header>
+        <section id="main-container">
+        <form th:action="@{/users/signup}" th:object="${user}" method="post">
+            <fieldset>
+                    <legend>Inscription</legend>
+                    
+                    <div class="input-group">
+		            	<input  class="input input-text" type="text" name="username" th:field="*{username}"/> 
+			            <label  class="input-label" for="username" > Identifiant : </label> 
+			            <span class="input-error" th:text="${session.msgerreurusername}"></span>
+		            </div>
+                    
+                    <div class="input-group">
+		            	<input  class="input input-text" type="text" name="email" th:field="*{email}"/> 
+			            <label  class="input-label" for="email" > Email : </label> 
+			            <span class="input-error" th:text="${session.msgerreuremail}"></span>
+		            </div>
+                    
+                     <div class="input-group">
+			            
+			            <input  class="input input-text" type="password" name="password" th:field="*{password}"/>
+			            <label  class="input-label"  for="password"  > Password : </label>
+			          
+            		</div>
+                      <div class="form-actions">
+                        <button type="submit" class="form-action">Enregistrer</button>
+                    </div>
+                    
+            </fieldset>
+           
+           
+           
+           <!-- 
+           
             <table>
                 <tr>
                     <td>Identifiant :</td>
@@ -27,8 +57,8 @@
                 <tr>
                     <td><button type="submit">Submit</button></td>
                 </tr>
-            </table>
+            </table> -->
         </form>
-
+	</section>
     </body>
 </html>
