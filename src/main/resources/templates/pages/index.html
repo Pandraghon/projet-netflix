@@ -13,65 +13,13 @@
             </article>
             <article id="movies-container" class="container media-container">
                 <h2>Movies you may like</h2>
-                <div class="content">
-                    <ul class="media-list">
-                        <li class="media-item">
-                            <img src="img/test.jpg" />
-                            <div class="media-info">
-                                <div class="media-title">Elephant Dream</div>
-                            </div>
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                    </ul>
-                </div>
+                <div class="content" th:include="fragments/list_films :: div.content"></div>
             </article>
             <article id="series-container" class="container media-container">
                 <h2>TV-Shows you may like</h2>
-                <div class="content">
-                    <ul class="media-list">
-                        <li class="media-item">
-                            <img src="images/Background_Privacy.jpg" />
-                            <div class="media-info">
-                                <div class="media-title">Elephant Dream</div>
-                            </div>
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                        <li class="media-item">
-                            
-                        </li>
-                    </ul>
-                </div>
+
+                <div class="content" th:include="fragments/list_series :: div.content"></div>
+
             </article>
         </section>
     </body>

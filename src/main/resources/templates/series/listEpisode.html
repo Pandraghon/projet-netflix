@@ -4,15 +4,16 @@
 <head th:include="fragments/head :: head"></head>
 
 <body>
-
-	<header th:include="fragments/header :: header"></header>
-	
-	 <section id="main-container">
-            <article id="movies-container" class="container media-container">
-                <div class="content">
+  <header th:include="fragments/header :: header"></header>
+  <section id="main-container">
+  
+  	<fieldset>
+  		 <legend>Saison <span th:text="${saison_number}"></span></legend>
+                <div class="input-group">
                     <ul class="media-list" th:each="episode : ${episodes}">
                         <li class="media-item">
-                            <span th:text="${episode.titre}"></span>
+                            <a th:href="@{/series/viewEpisode/{id}(id=${episode.video.id})}" >
+                            <span th:text="${episode.titre}"/>  :  <span th:text="${episode.description}"/> </a>
                             <!--  <a th:href="@{/series/view/{id}(id=${serie.id})}">
                                 <img th:src="@{/images/{image}(image=${serie.media.image})}" />
                                 <div class="media-info">
@@ -23,7 +24,7 @@
                         </li>
                      	</ul>
                      </div>
-              </article>
+              </fieldset>
         </section>
       
 </body>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head></head>
+    <body>
+        <div class="content">
+            <div class="no-content" th:if="${#lists.isEmpty(series)}">Il n'y a aucune série.</div>
+            <ul class="media-list">
+                <li class="media-item" th:each="serie : ${series}">
+                    <a th:href="@{/series/view/{id}(id=${serie.id})}">
+                        <img th:src="@{/img/{image}(image=${serie.media.image})}" />
+                        <div class="media-info">
+                            <div class="media-title" th:text="${serie.media.name}"></div>
+                            <div class="media-date" th:text="'(' + ${film.media.date} + ')'"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
