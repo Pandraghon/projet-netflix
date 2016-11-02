@@ -14,11 +14,11 @@
                         <label class="input-label" for="name">Nom</label>
                         <span class="input-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                     </div>
-                    <!--<div class="input-group">
-                        <input class="input input-text" type="date" th:field="*{date}" id="date" />
-                        <label class="input-label" for="date">Date</label>
+                    <div class="input-group">
+                        <input class="input input-text" type="text" th:field="*{date}" id="date" />
+                        <label class="input-label" for="date">Date de parution</label>
                         <span class="input-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
-                    </div>-->
+                    </div>
                     <div class="input-group">
                         <textarea class="input input-textarea" type="text" th:field="*{description}" id="description"></textarea>
                         <label class="input-label" for="description">Description</label>
@@ -40,13 +40,11 @@
                         <span class="input-error" th:if="${#fields.hasErrors('video')}" th:errors="*{video}"></span>
                     </div>-->
                     <div class="input-group">
-                        <input class="input input-text last-input" list="categories" id="categories[]" />
+                        <input class="input input-text last-input" list="categList" id="categories[]" />
                         <label class="input-label" for="categories[]">Catégories</label>
-                        <datalist id="categories">
-                            <option value="Aventure" />
-                            <option value="Fantastique" />
-                            <option value="Romance" />
-                            <option value="Historique" />
+                        <span class="input-error" th:if="${#fields.hasErrors('categories')}" th:errors="*{categories}"></span>
+                        <datalist id="categList">
+                            <option th:each="category : ${listCategories}" th:value="${category.name}" />
                         </datalist>
                     </div>
                     <div class="form-actions">
