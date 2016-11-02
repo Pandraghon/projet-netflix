@@ -4,7 +4,7 @@
     <head th:include="fragments/head :: head"></head>
     <body>
         <header th:include="fragments/header :: header"></header>
-        <div class="actions-bar">
+        <div th:if="${session.role}" class="actions-bar">
             <a th:href="@{/films/add}" class="action"><i class="fa fa-plus"></i></a>
         </div>
         <section id="main-container">
