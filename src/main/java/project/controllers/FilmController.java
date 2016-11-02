@@ -25,10 +25,12 @@ import project.models.Category;
 
 import project.models.Film;
 import project.models.Media;
+import project.models.User;
 import project.models.Video;
 import project.repositories.CategoryRepository;
 import project.repositories.FilmRepository;
 import project.repositories.MediaRepository;
+import project.repositories.UserRepository;
 import project.repositories.VideoRepository;
 
 @Controller
@@ -58,6 +60,9 @@ public class FilmController {
     @Autowired
     private CategoryRepository categRep;
 
+    @Autowired
+    private UserRepository userRep;
+
     @GetMapping({"", "/"})
     public String listFilms(Model model, @RequestParam(value = "category", required = false) String category) {
         if (category != null) {
@@ -72,6 +77,19 @@ public class FilmController {
         }
         model.addAttribute("categories", (Iterable<Category>) categRep.findAll());
         return PAGE_LIST;
+    }
+
+    @GetMapping("/want/{id}")
+    public String wantFilm(HttpSession session, Model model, @PathVariable("id") Long id) {
+        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+            session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/users/login";
+        }
+        Film film = filmRep.findOne(id);
+        if(film == null) return "redirect:/" + SUBFOLDER;
+        User user = userRep.findOne((Long) session.getAttribute("id"));
+        user.getWanted().add(film.getMedia());
+        return "redirect:/films/view/" + Long.toString(id);
     }
 
     @GetMapping("/view/{id}")

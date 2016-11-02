@@ -11,7 +11,7 @@
                     <h2 class="media-title" th:text="${film.media.name}"></h2>
                     <div class="video-data">
                         <span class="media-one-data" th:if="not ${#lists.isEmpty(film.media.categories)}" th:text="${#strings.setJoin(film.media.categories,', ')}"></span>
-                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i>2006</span>
+                        <span class="media-one-data"><i class="fa fa-fw fa-calendar"></i><span th:text="${film.media.date}"></span></span>
                         <span class="media-one-data"><i class="fa fa-fw fa-clock-o"></i>11 min</span>
                         <span class="media-one-data">
                             <i class="fa fa-star"></i>
@@ -29,6 +29,9 @@
                     </a>
                     <a class="media-action small-action" th:href="${film.media.trailer}" target="_blank">
                         <i class="fa fa-ticket"></i> Trailer
+                    </a>
+                    <a class="media-action small-action" th:href="@{/films/want/{id}(id=${film.id})}" target="_blank">
+                        <i class="fa fa-heart"></i> Add to Watchlist
                     </a>
                 </div>
             </article>
