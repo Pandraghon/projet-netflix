@@ -203,7 +203,7 @@ public class FilmController {
             return PAGE_ADD;
         }
 
-        if (categories.length != 0) {
+        if (categories != null && categories.length != 0) {
             for (String categ : categories) {
                 if (categ.trim().isEmpty()) {
                     continue;
