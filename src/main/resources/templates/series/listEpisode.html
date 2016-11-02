@@ -12,15 +12,8 @@
                 <div class="input-group">
                     <ul class="media-list" th:each="episode : ${episodes}">
                         <li class="media-item">
-                            <a th:href="@{/series/viewEpisode/{id}(id=${episode.video.id})}" >
+                            <a th:href="@{/videos/view/{id}(id=${episode.video.id})}" >
                             <span th:text="${episode.titre}"/>  :  <span th:text="${episode.description}"/> </a>
-                            <!--  <a th:href="@{/series/view/{id}(id=${serie.id})}">
-                                <img th:src="@{/images/{image}(image=${serie.media.image})}" />
-                                <div class="media-info">
-                                    <div class="media-title">Elephant Dream</div>
-                                    <div class="media-date">(2006)</div>
-                                </div>
-                            </a>-->
                         </li>
                      	</ul>
                      </div>
