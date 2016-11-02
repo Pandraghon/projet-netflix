@@ -9,7 +9,7 @@ var datalist = document.getElementById('categList'),
         var input = document.createElement('input');
         input.className = last_input.className + " last-input";
         input.id = 'categories[]';
-        input.setAttribute('list', 'categories');
+        input.setAttribute('list', 'categList');
         input_group.appendChild(input);
         last_input = input;
         last_input.addEventListener('input', addInput);
