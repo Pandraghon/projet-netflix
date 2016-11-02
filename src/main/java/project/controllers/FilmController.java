@@ -64,8 +64,8 @@ public class FilmController {
     private UserRepository userRep;
 
     @GetMapping({"", "/"})
-    public String listFilms(Model model, @RequestParam(value = "category", required = false) String category) {
-        if (category != null) {
+    public String listFilms(HttpSession session, Model model, @RequestParam(value = "category", required = false) String category) {
+    	if (category != null) {
             Category cat = categRep.findByNameIgnoreCase(category);
             if (cat == null) {
                 model.addAttribute("films", (Iterable<Film>) filmRep.findAll());
@@ -76,12 +76,13 @@ public class FilmController {
             model.addAttribute("films", (Iterable<Film>) filmRep.findAll());
         }
         model.addAttribute("categories", (Iterable<Category>) categRep.findAll());
+        
         return PAGE_LIST;
     }
 
     @GetMapping("/want/{id}")
     public String wantFilm(HttpSession session, Model model, @PathVariable("id") Long id) {
-        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+        if ((session.getAttribute("id") == null)) {
             session.setAttribute("login", "Vous devez d'abord vous connecter");
             return "redirect:/users/login";
         }
@@ -95,7 +96,7 @@ public class FilmController {
     
     @GetMapping("/watchlist")
     public String watchlist(HttpSession session, Model model) {
-        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+        if ((session.getAttribute("id") == null)) {
             session.setAttribute("login", "Vous devez d'abord vous connecter");
             return "redirect:/users/login";
         }
@@ -105,7 +106,7 @@ public class FilmController {
 
     @GetMapping("/view/{id}")
     public String viewFilm(HttpSession session, Model model, @PathVariable("id") Long id) {
-        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+        if ((session.getAttribute("id") == null)) {
             session.setAttribute("login", "Vous devez d'abord vous connecter");
             return "redirect:/users/login";
         }
@@ -186,7 +187,13 @@ public class FilmController {
     }
 
     @GetMapping("add")
-    public String add(Model model) {
+    public String add(HttpSession session, Model model) {
+    	
+        if ((session.getAttribute("role") == null) || (!(boolean) session.getAttribute("role"))) {
+            //session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/";
+        }
+        
         model.addAttribute("film", new Film());
         model.addAttribute("media", new Media());
         model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
@@ -198,6 +205,8 @@ public class FilmController {
     public String add(Model model, @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image, @RequestParam("video") MultipartFile video, @RequestParam(value = "categ", required = false) String[] categories,
             RedirectAttributes redirectAttributes) {
 
+
+        
         if (bindingResult.hasErrors()) {
             model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
             return PAGE_ADD;
