@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
@@ -75,7 +75,11 @@ public class FilmController {
     }
 
     @GetMapping("/view/{id}")
-    public String viewFilm(Model model, @PathVariable("id") Long id) {
+    public String viewFilm(HttpSession session, Model model, @PathVariable("id") Long id) {
+        if ((session.getAttribute("id") == null) || (!(boolean) session.getAttribute("role"))) {
+            session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/users/login";
+        }
         Film film = filmRep.findOne(id);
         if(film == null) return "redirect:/" + SUBFOLDER;
         model.addAttribute(film);
