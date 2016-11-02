@@ -125,7 +125,8 @@ public class UserController {
 
 		session.removeAttribute("msgerreurmdp");
 		session.removeAttribute("msgerreurlogin");
-
+		session.removeAttribute("login");
+		
 		if (userRep.findByUsername(user.getUsername()) != null) {
 
 			if (BCrypt.checkpw(user.getPassword(), userRep.findByUsername(user.getUsername()).getPassword())) {
