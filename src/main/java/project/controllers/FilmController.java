@@ -24,9 +24,8 @@ import project.models.Category;
 
 import project.models.Film;
 import project.models.Media;
-
+import project.models.Video;
 import project.repositories.CategoryRepository;
-
 import project.repositories.FilmRepository;
 import project.repositories.MediaRepository;
 import project.repositories.VideoRepository;
@@ -50,13 +49,13 @@ public class FilmController {
 	private FilmRepository filmRep;
 
 	@Autowired
+	private VideoRepository videoRep;
+
+	@Autowired
 	private MediaRepository mediaRep;
 
 	@Autowired
 	private CategoryRepository categRep;
-
-	@Autowired
-	private VideoRepository videoRep;
 
 	@GetMapping({ "", "/" })
 	public String listFilms(Model model, @RequestParam(value = "category", required = false) String category) {
@@ -77,10 +76,11 @@ public class FilmController {
 	@GetMapping("/view/{id}")
 	public String viewFilm(HttpSession session, Model model, @PathVariable("id") Long id) {
 
-		if ((session.getAttribute("id") != null) && ((boolean)session.getAttribute("role"))) {
+		if ((session.getAttribute("id") != null) && ((boolean) session.getAttribute("role"))) {
 			Film film = filmRep.findOne(id);
+			if (film == null)
+				return "redirect:" + SUBFOLDER;
 			model.addAttribute(film);
-			session.removeAttribute("login");
 			return PAGE_VIEW;
 		} else {
 			session.setAttribute("login", "Vous devez d'abord vous connecter");
@@ -88,15 +88,79 @@ public class FilmController {
 		}
 	}
 
+	
+
 	@GetMapping("/edit/{id}")
 	public String editFilmForm(Model model, @PathVariable("id") Long id) {
 		Film film = filmRep.findOne(id);
+		if (film == null)
+			return "redirect:" + SUBFOLDER;
 		model.addAttribute("film", film);
+		model.addAttribute("media", film.getMedia());
+		model.addAttribute("categories", film.getMedia().getCategories());
+		model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
+
 		return PAGE_EDIT;
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editFilm(Model model, @Valid Film film, BindingResult bindingResult, @PathVariable("id") Long id) {
+	public String editFilm(Model model, @Valid Media media, BindingResult bindingResult,
+			@RequestParam("file") MultipartFile image,
+			@RequestParam(value = "categ", required = false) String[] categories, RedirectAttributes redirectAttributes,
+			@PathVariable("id") Long id) {
+
+		Film film = filmRep.findOne(id);
+		if (film == null)
+			return "redirect:" + SUBFOLDER;
+		System.out.println("id media : " + media.getId());
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("film", film);
+			model.addAttribute("categories", media.getCategories());
+			model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
+			return PAGE_EDIT;
+		}
+
+		if (categories.length != 0) {
+			for (String categ : categories) {
+				if (categ.trim().isEmpty()) {
+					continue;
+				}
+				Category category = categRep.findByNameIgnoreCase(categ);
+				if (category == null) {
+					category = categRep.save(new Category(categ));
+				}
+				if (!media.getCategories().contains(category)) {
+					media.getCategories().add(category);
+				}
+			}
+		}
+
+		String filePath = "";
+		if (!image.isEmpty()) {
+			try {
+				String uploadsDir = "/img/";
+				String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+				if (!new File(realPathtoUploads).exists()) {
+					new File(realPathtoUploads).mkdir();
+				}
+
+				filePath = Long.toString(media.getId()) + "." + FilenameUtils.getExtension(image.getOriginalFilename());
+				String path = realPathtoUploads + filePath;
+				File dest = new File(path);
+				image.transferTo(dest);
+				media.setImage(filePath);
+			} catch (IOException | IllegalStateException e) {
+
+			}
+		} else {
+			media.setImage(film.getMedia().getImage());
+		}
+
+		mediaRep.save(media);
+		Film saveFilm = filmRep.save(film);
+
+		System.out.println("NEW SAVED FILM WITH ID : " + saveFilm.getId());
 		return "redirect:/" + SUBFOLDER;
 	}
 
@@ -104,26 +168,35 @@ public class FilmController {
 	public String add(Model model) {
 		model.addAttribute("film", new Film());
 		model.addAttribute("media", new Media());
-		model.addAttribute("categories", (Iterable<Category>) categRep.findAll());
+		model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
 
 		return PAGE_ADD;
 	}
 
 	@PostMapping("/add")
-	public String add(@Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image,
-			@RequestParam("categ") String[] categories, RedirectAttributes redirectAttributes) {
+	public String add(Model model, @Valid Media media, BindingResult bindingResult,
+			@RequestParam("file") MultipartFile image, @RequestParam("video") MultipartFile video,
+			@RequestParam(value = "categ", required = false) String[] categories,
+			RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("erreeeeur");
+			model.addAttribute("listCategories", (Iterable<Category>) categRep.findAll());
 			return PAGE_ADD;
 		}
 
-		for (String categ : categories) {
-			Category category = categRep.findByName(categ);
-			if (category == null) {
-				category = categRep.save(new Category(categ));
+		if (categories.length != 0) {
+			for (String categ : categories) {
+				if (categ.trim().isEmpty()) {
+					continue;
+				}
+				Category category = categRep.findByNameIgnoreCase(categ);
+				if (category == null) {
+					category = categRep.save(new Category(categ));
+				}
+				if (!media.getCategories().contains(category)) {
+					media.getCategories().add(category);
+				}
 			}
-			media.getCategories().add(category);
 		}
 
 		Media saveMedia = mediaRep.save(media);
@@ -133,25 +206,49 @@ public class FilmController {
 			try {
 				String uploadsDir = "/img/";
 				String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
-				if (!new File(realPathtoUploads).exists())
+				if (!new File(realPathtoUploads).exists()) {
 					new File(realPathtoUploads).mkdir();
+				}
 
 				filePath = Long.toString(saveMedia.getId()) + "."
 						+ FilenameUtils.getExtension(image.getOriginalFilename());
 				String path = realPathtoUploads + filePath;
 				File dest = new File(path);
 				image.transferTo(dest);
+				saveMedia.setImage(filePath);
 			} catch (IOException | IllegalStateException e) {
 
 			}
 		}
 
-		saveMedia.setImage(filePath);
 		saveMedia = mediaRep.save(saveMedia);
 		System.out.println("NEW SAVED MEDIA WITH ID : " + saveMedia.getId() + " NAME = " + saveMedia.getImage());
 
-		Film film = new Film(media);
+		filePath = "";
+		Video vid = null;
+		if (!video.isEmpty()) {
+			try {
+				String uploadsDir = "/vid/";
+				String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+				if (!new File(realPathtoUploads).exists()) {
+					new File(realPathtoUploads).mkdir();
+				}
+
+				filePath = "film" + Long.toString(saveMedia.getId()) + "."
+						+ FilenameUtils.getExtension(video.getOriginalFilename());
+				String path = realPathtoUploads + filePath;
+				File dest = new File(path);
+				video.transferTo(dest);
+				vid = videoRep.save(new Video(filePath));
+				System.out.println(filePath);
+			} catch (IOException | IllegalStateException e) {
+
+			}
+		}
+
+		Film film = new Film();
 		film.setMedia(media);
+		film.setVideo(vid);
 		Film saveFilm = filmRep.save(film);
 
 		System.out.println("NEW SAVED FILM WITH ID : " + saveFilm.getId());
@@ -159,10 +256,10 @@ public class FilmController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id) {
+    public String delete(@PathVariable("id") Long id) {
 
-		filmRep.delete(id);
-		return "redirect:/" + SUBFOLDER;
-	}
+        filmRep.delete(id);
+        return "redirect:/" + SUBFOLDER;
+    }
 
 }

@@ -24,7 +24,7 @@
                     <p class="media-description" th:text="${film.media.description}"></p>
                 </div>
                 <div class="media-actions">
-                    <a class="media-action big-action" th:href="@{/videos/view/1}" target="_blank">
+                    <a class="media-action big-action" th:href="@{/videos/view/{id}(id=${film.video.id})}" target="_blank">
                         <i class="fa fa-play-circle-o"></i> Watch it now
                     </a>
                     <a class="media-action small-action" th:href="${film.media.trailer}" target="_blank">

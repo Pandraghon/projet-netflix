@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import project.models.Media;
-import project.models.Video;
-
 @Entity
 @Table(name="films")
 public class Film {
@@ -58,7 +55,5 @@ public class Film {
 	public void setVideo(Video video) {
 		this.video = video;
 	}
-	
-	
 	
 }

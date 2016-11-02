@@ -180,8 +180,7 @@ public class SerieController {
 	}
 	
 	@PostMapping("/addEpisode")
-	public String addEpisode(@Valid Episode episode, BindingResult bindingresult ,@RequestParam("file") MultipartFile video,RedirectAttributes redirectAttributes) {
-		
+	public String addEpisode(@Valid Episode episode, BindingResult bindingresult, @RequestParam("file") MultipartFile video,RedirectAttributes redirectAttributes) {
 		
 		System.out.println("DEBUT POST ADD EPISODE");
 
@@ -202,19 +201,17 @@ public class SerieController {
                     new File(realPathtoUploads).mkdir();
                 }
 
-                filePath = Long.toString(saveEpisode.getId()) + "." + FilenameUtils.getExtension(video.getOriginalFilename());
+                filePath = "episode" + Long.toString(saveEpisode.getId()) + "." + FilenameUtils.getExtension(video.getOriginalFilename());
                 String path = realPathtoUploads + filePath;
                 File dest = new File(path);
                 video.transferTo(dest);
+                Video newvideo = VideoRepository.save(new Video(filePath));
+                saveEpisode.setVideo(newvideo);
+                System.out.println(filePath);
             } catch (IOException | IllegalStateException e) {
 
             }
         }
-		
-        Video newvideo = new Video(filePath);
-        saveEpisode.setVideo(newvideo);
-		
-		VideoRepository.save(newvideo);
 		
 		Serie serie = episode.getSerie();
 		List<Episode> listEpisodes = serie.getEpisodes();
@@ -247,12 +244,16 @@ public class SerieController {
             return PAGE_ADD;
         }
 
-        for(String categ : categories) {
-            Category category = CategoryRepository.findByName(categ);
-            if(category == null) {
-                category = CategoryRepository.save(new Category(categ));
+        if(categories.length != 0) {
+            for(String categ : categories) {
+                if(categ.trim().isEmpty()) continue;
+                Category category = CategoryRepository.findByNameIgnoreCase(categ);
+                if(category == null) {
+                    category = CategoryRepository.save(new Category(categ));
+                }
+                if(!media.getCategories().contains(category))
+                    media.getCategories().add(category);
             }
-            media.getCategories().add(category);
         }
         
         Media saveMedia = MediaRepository.save(media);
