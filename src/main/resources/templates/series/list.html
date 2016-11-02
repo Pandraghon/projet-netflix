@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-    
-<head th:include="fragments/head :: head"></head>
 
-<body>
+    <head th:include="fragments/head :: head"></head>
 
-	<header th:include="fragments/header :: header"></header>
-	 <div class="actions-bar">
+    <body>
+
+        <header th:include="fragments/header :: header"></header>
+        <div th:if="${session.role}" class="actions-bar">
             <a th:href="@{/series/add}" class="action"><i class="fa fa-plus"></i></a>
-    		<a th:href="@{/series/addEpisode}" class="action"><i class="fa fa-plus"></i></a>
-    		
-     </div>
-     
-	 <section id="main-container">
+            <a th:href="@{/series/addEpisode}" class="action"><i class="fa fa-plus"></i></a>
+
+        </div>
+
+        <section id="main-container">
             <aside class="categories-container">
                 <ul>
                     <li th:each="category : ${categories}">
@@ -20,14 +20,14 @@
                     </li>
                 </ul>
             </aside>
-            
+
             <article id="movies-container" class="container media-container">
-                 <div class="content">
-                <div class="content" th:include="fragments/list_series :: div.content"></div>
+                <div class="content">
+                    <div class="content" th:include="fragments/list_series :: div.content"></div>
                 </div>
-              </article>
-              <a th:href="@{/series/admin}">Admin list</a>
+            </article>
+            <a th:href="@{/series/admin}">Admin list</a>
         </section>
-      
-</body>
+
+    </body>
 </html>

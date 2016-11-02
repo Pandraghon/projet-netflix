@@ -128,6 +128,29 @@ header {
             width: 100%;
             overflow-x: hidden;
             overflow-y: auto;
+            
+            li {
+                display: block;
+                
+                a {
+                    display: block;
+                    padding: 4px 0 4px 15px;
+                    color: white;
+                    text-decoration: none;
+                    
+                    &:hover {
+                        color: wheat;
+                    }
+                }
+                
+                &:nth-child(2n) {
+                    background-color: rgba(20, 20, 20, .2);
+                }
+                
+                &:nth-child(2n+1) {
+                    background-color: rgba(60, 60, 60, .2);
+                }
+            }
         }
     }
 }

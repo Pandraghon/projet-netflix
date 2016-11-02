@@ -51,13 +51,15 @@ public class Media {
     private Set<Category> categories = new HashSet<>();
 
     @NotNull
+    @Size(min=1, max=100)
     private String name;
-
     
     private String date;
 
     private String description;
+        
     private String trailer;
+    
     private String image;
 
     public Media() {
@@ -129,4 +131,14 @@ public class Media {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
+    public List<User> getWanters() {
+        return wanters;
+    }
+
+    public void setWanters(List<User> wanters) {
+        this.wanters = wanters;
+    }
+    
+    
 }
