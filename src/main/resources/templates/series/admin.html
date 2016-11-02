@@ -15,9 +15,9 @@
 	 <section id="main-container">
             <article id="movies-container" class="container media-container">
                 <div class="content">
-                <div class="no-content" th:if="${#lists.isEmpty(serie)}">Il n'y a aucune série.</div>
+                <div class="no-content" th:if="${#lists.isEmpty(serie)}">Il n'y a aucune sï¿½rie.</div>
                     
-               <!--  <a th:href="@{/series/add}">Ajouter une série</a>
+               <!--  <a th:href="@{/series/add}">Ajouter une sï¿½rie</a>
                 <a th:href="@{/series/addEpisode}">Ajouter episode</a> -->
                     <ul class="media-list" th:each="serie : ${serie}">
                         <li class="media-item">
@@ -26,8 +26,8 @@
                                 <div class="media-info">
                                     <div class="media-title"><a  th:href="@{/series/view/{id}(id=${serie.id})}"><span th:text="${serie.media.name}"></span></a></div>
                                     <div class="media-date">(<a  th:href="@{/series/view/{id}(id=${serie.id})}"><span th:text="${serie.media.date}"></span></a>)</div>
-                                   <div><a th:href="@{/series/edit/{id}(id=${serie.media.id})}">Editer</a></div>
-                                    <div><a th:href="@{/series/delete/{id}(id=${serie.media.id})}">Supprimer</a></div>
+                                   <div><a th:href="@{/series/edit/{id}(id=${serie.id})}">Editer</a></div>
+                                    <div><a th:href="@{/series/delete/{id}(id=${serie.id})}">Supprimer</a></div>
                                  	
                                 </div>
                                 
@@ -39,7 +39,7 @@
                      	</ul>
                      </div>
               </article>
-              <a th:href="@{/series}">Retour à l'index</a>
+              <a th:href="@{/series}">Retour ï¿½ l'index</a>
         </section>
       
 </body>
