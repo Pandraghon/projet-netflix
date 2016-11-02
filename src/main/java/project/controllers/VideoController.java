@@ -5,7 +5,11 @@
  */
 package project.controllers;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import javax.websocket.server.PathParam;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +32,20 @@ public class VideoController {
     
     @GetMapping("/view/{id}")
     public String viewFilm(Model model, @PathVariable("id") Long id) {
+        Map<String, String> type = new HashMap<>();
+        type.put("avi", "video/x-msvideo");
+        type.put("mp4", "video/mp4");
+        type.put("webm", "video/webm");
+        type.put("ogv", "video/ogg");
+        type.put("mov", "video/quicktime");
+        
         Video video = videoRepository.findOne(id);
         if(video == null) return "redirect:/";
         
         model.addAttribute(video);
+        model.addAttribute("type", type.get(FilenameUtils.getExtension(video.getContent())));
         
-            return PAGE_VIEW;
+        return PAGE_VIEW;
     }
     
 }

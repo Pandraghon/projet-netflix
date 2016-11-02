@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-    <head th:include="fragments/head :: head"></head>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Lobster|Yanone+Kaffeesatz" rel="stylesheet" />
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
+    </head>
     <body>
-        <header th:include="fragments/header :: header"></header>
-        <section id="main-container">
-            <article id="video-container" class="container">
-                <h2 class="video-title" th:text="'Elephant Dreams'"></h2>
-                <video width="600" height="400" controls="controls">
-                    <source th:src="@{/vid/{name}(name=${video.content})}" type="video/x-msvideo" />
-                    Your browser does not support the video tag.
-                </video>
-            </article>
-        </section>
-    </body>
+        <video width="600" height="400" controls="controls">
+            <source th:src="@{/vid/{name}(name=${video.content})}" th:type="${type}" />
+            Your browser does not support the video tag.
+        </video>
+        <a th:href='@{/vid/{name}(name=${video.content})}'>Télécharger la vidéo</a>
+</body>
 </html>

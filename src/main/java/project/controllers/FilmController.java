@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.FileUtils;
 import project.models.Category;
 
 import project.models.Film;
@@ -76,7 +77,7 @@ public class FilmController {
     @GetMapping("/view/{id}")
     public String viewFilm(Model model, @PathVariable("id") Long id) {
         Film film = filmRep.findOne(id);
-        if(film == null) return "redirect:" + SUBFOLDER;
+        if(film == null) return "redirect:/" + SUBFOLDER;
         model.addAttribute(film);
         return PAGE_VIEW;
     }
@@ -84,7 +85,7 @@ public class FilmController {
     @GetMapping("/edit/{id}")
     public String editFilmForm(Model model, @PathVariable("id") Long id) {
         Film film = filmRep.findOne(id);
-        if(film == null) return "redirect:" + SUBFOLDER;
+        if(film == null) return "redirect:/" + SUBFOLDER;
         model.addAttribute("film", film);
         model.addAttribute("media", film.getMedia());
         model.addAttribute("categories", film.getMedia().getCategories());
@@ -98,7 +99,7 @@ public class FilmController {
             RedirectAttributes redirectAttributes, @PathVariable("id") Long id) {
 
         Film film = filmRep.findOne(id);
-        if(film == null) return "redirect:" + SUBFOLDER;
+        if(film == null) return "redirect:/" + SUBFOLDER;
         System.out.println("id media : " + media.getId());
         
         if (bindingResult.hasErrors()) {
@@ -222,6 +223,7 @@ public class FilmController {
                 String path = realPathtoUploads + filePath;
                 File dest = new File(path);
                 video.transferTo(dest);
+                System.out.println(dest.length());
                 vid = videoRep.save(new Video(filePath));
                 System.out.println(filePath);
             } catch (IOException | IllegalStateException e) {
