@@ -84,7 +84,7 @@ public class FilmController {
 			return PAGE_VIEW;
 		} else {
 			session.setAttribute("login", "Vous devez d'abord vous connecter");
-			return "redirect:/";
+			return "redirect:/users/login";
 		}
 	}
 
