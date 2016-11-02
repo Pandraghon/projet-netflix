@@ -30,18 +30,18 @@ public class User {
 	private Long id;
 	
 	@NotNull
-	@Column(unique=true)
+	//@Column(unique=true)
 	@Size(min=3, max=20)
 	private String username = null;
 	
 	@Email
-	@NotNull
-	@Column(unique=true)
+	//@NotNull
+	//@Column(unique=true)
 	@Size(min=5, max=50)
 	private String email = null;
 	
 	@NotNull
-	@Size(min=8, max=50)
+	//@Size(min=1, max=50)
 	private String password = null;
 	
 	private Boolean role = false;

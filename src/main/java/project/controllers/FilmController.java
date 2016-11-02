@@ -23,8 +23,10 @@ import org.apache.commons.io.FilenameUtils;
 
 import project.models.Film;
 import project.models.Media;
+import project.models.Video;
 import project.repositories.FilmRepository;
 import project.repositories.MediaRepository;
+import project.repositories.VideoRepository;
 
 @Controller
 @RequestMapping("/films")
@@ -47,6 +49,9 @@ public class FilmController {
 	@Autowired
 	private MediaRepository mediaRep;
 
+	@Autowired
+	private VideoRepository videoRep;
+	
 	@GetMapping({ "", "/" })
 	public String listFilms(Model model) {
 		model.addAttribute("film", (Iterable<Film>) filmRep.findAll());
@@ -76,13 +81,13 @@ public class FilmController {
 	public String add(Model model) {
 		model.addAttribute("film",new Film());
 		model.addAttribute("media",new Media());
-			
+		//model.addAttribute("video",new Video());
+		
 		return PAGE_ADD;
 	}
 	
 	@PostMapping("/add")
-	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image,
-            RedirectAttributes redirectAttributes) {
+	public String add( @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image, RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors())
 		{
@@ -111,6 +116,34 @@ public class FilmController {
 		saveMedia.setImage(filePath);
                 saveMedia = mediaRep.save(saveMedia);
 		System.out.println("NEW SAVED MEDIA WITH ID : "+ saveMedia.getId() + " NAME = " + saveMedia.getImage() );
+
+		//----------------- video ----------------
+	/*	Video saveVideo = videoRep.save(video);
+        String filePathVid = "";
+        if (!image.isEmpty()) {
+            try {
+                String uploadsDir = "/vid/";
+                String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+                if(! new File(realPathtoUploads).exists())
+                    new File(realPathtoUploads).mkdir();
+
+                filePath = Long.toString(saveMedia.getId()) + "." + FilenameUtils.getExtension(image.getOriginalFilename());
+                String path = realPathtoUploads + filePathVid;
+                File dest = new File(path);
+                vid.transferTo(dest);
+            } catch(IOException | IllegalStateException e) {
+                
+            }
+        }
+
+saveVideo.setContent(filePathVid);
+        saveVideo = videoRep.save(saveVideo);
+System.out.println("NEW SAVED MEDIA WITH ID : "+ saveVideo.getId() + " NAME = " + saveVideo.getId() );*/
+
+//----------------------		
+		
+	
+		
 		
 		Film film = new Film(media);
 		film.setMedia(media);

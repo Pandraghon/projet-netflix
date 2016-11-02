@@ -11,9 +11,9 @@
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-        <form th:action="@{/users/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
+        <form th:action="@{/users/login}" th:object="${user}"  method="post">
+            <div><label> Nom d'utilisateur : <input type="text" name="username" th:field="*{username}"/> <span th:text="${session.msgerreurlogin}"/></label> </div>
+            <div><label> Password: <input type="password" name="password" th:field="*{password}"/><span th:text="${session.msgerreurmdp}"/> </label></div>
             <div><input type="submit" value="Sign In"/></div>
         </form>
     </body>
