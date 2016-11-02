@@ -116,33 +116,6 @@ public class FilmController {
 		saveMedia.setImage(filePath);
                 saveMedia = mediaRep.save(saveMedia);
 		System.out.println("NEW SAVED MEDIA WITH ID : "+ saveMedia.getId() + " NAME = " + saveMedia.getImage() );
-
-		//----------------- video ----------------
-	/*	Video saveVideo = videoRep.save(video);
-        String filePathVid = "";
-        if (!image.isEmpty()) {
-            try {
-                String uploadsDir = "/vid/";
-                String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-                if(! new File(realPathtoUploads).exists())
-                    new File(realPathtoUploads).mkdir();
-
-                filePath = Long.toString(saveMedia.getId()) + "." + FilenameUtils.getExtension(image.getOriginalFilename());
-                String path = realPathtoUploads + filePathVid;
-                File dest = new File(path);
-                vid.transferTo(dest);
-            } catch(IOException | IllegalStateException e) {
-                
-            }
-        }
-
-saveVideo.setContent(filePathVid);
-        saveVideo = videoRep.save(saveVideo);
-System.out.println("NEW SAVED MEDIA WITH ID : "+ saveVideo.getId() + " NAME = " + saveVideo.getId() );*/
-
-//----------------------		
-		
-	
 		
 		
 		Film film = new Film(media);
