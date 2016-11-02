@@ -117,7 +117,13 @@ public class FilmController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editFilmForm(Model model, @PathVariable("id") Long id) {
+    public String editFilmForm(HttpSession session, Model model, @PathVariable("id") Long id) {
+        
+        if ((session.getAttribute("role") == null) || (!(boolean) session.getAttribute("role"))) {
+            //session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/";
+        }
+        
         Film film = filmRep.findOne(id);
         if(film == null) return "redirect:/" + SUBFOLDER;
         model.addAttribute("film", film);
@@ -129,9 +135,14 @@ public class FilmController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editFilm(Model model, @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image, @RequestParam(value = "categ", required = false) String[] categories,
+    public String editFilm(HttpSession session, Model model, @Valid Media media, BindingResult bindingResult, @RequestParam("file") MultipartFile image, @RequestParam(value = "categ", required = false) String[] categories,
             RedirectAttributes redirectAttributes, @PathVariable("id") Long id) {
 
+        if ((session.getAttribute("role") == null) || (!(boolean) session.getAttribute("role"))) {
+            //session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/";
+        }
+        
         Film film = filmRep.findOne(id);
         if(film == null) return "redirect:/" + SUBFOLDER;
         System.out.println("id media : " + media.getId());

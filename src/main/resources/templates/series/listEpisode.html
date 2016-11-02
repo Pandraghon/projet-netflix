@@ -12,7 +12,7 @@
                 <div class="input-group">
                     <ul class="media-list" th:each="episode : ${episodes}">
                         <li class="media-item">
-                            <a th:href="@{/videos/view/{id}(id=${episode.video.id})}" >
+                            <a th:href="@{/videos/view/{id}(id=${episode.video.id})}" th:onclick="'window.open(this.href, \'' + ${episode.serie.media.name} + '\', \'scrollbars=1,resizable=1,height=400,width=600\'); return false;'">
                             <span th:text="${episode.titre}"/>  :  <span th:text="${episode.description}"/> </a>
                         </li>
                      	</ul>
