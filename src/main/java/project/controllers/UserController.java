@@ -92,10 +92,13 @@ public class UserController {
 
 				session.setAttribute("id", saveUser.getId());
 				session.setAttribute("role", saveUser.getRole());
+				session.setAttribute("username", saveUser.getUsername());
 
 				session.removeAttribute("msgerreuremail");
 				session.removeAttribute("msgerreurusername");
-				System.out.println("ID de session : " + session.getAttribute("id"));
+				System.out.println("ID de session : " + session.getAttribute("id") +
+						" nom : " + session.getAttribute("username") +
+						" role : " + session.getAttribute("role"));
 				return "redirect:/";
 			} else {
 				System.out.println("Email déjà utilisé par un autre utilisateur !");
@@ -137,7 +140,9 @@ public class UserController {
 
 				session.removeAttribute("msgerreurmdp");
 				session.removeAttribute("msgerreurlogin");
-				System.out.println(session.getAttribute("id"));
+				System.out.println("ID de session : " + session.getAttribute("id") +
+						" nom : " + session.getAttribute("username") +
+						" role : " + session.getAttribute("role"));
 				return "redirect:/";
 			} else {
 
