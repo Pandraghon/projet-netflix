@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
@@ -169,8 +170,12 @@ public class SerieController {
 	}
 	
 	@GetMapping("/addEpisode")
-	public String addEpisodeGet(Model model) {
+	public String addEpisodeGet(HttpSession session, Model model) {
 		
+        if ((session.getAttribute("role") == null) || (!(boolean) session.getAttribute("role"))) {
+            //session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/";
+        }
 		
 		model.addAttribute("episode", new Episode());
 		List<Serie> listserie = (List<Serie>) SerieRepository.findAll();
@@ -227,7 +232,13 @@ public class SerieController {
 	
 
     @GetMapping("/add")
-    public String addSerieForm(Model model) {
+    public String addSerieForm(HttpSession session, Model model) {
+    	
+        if ((session.getAttribute("role") == null) || (!(boolean) session.getAttribute("role"))) {
+            //session.setAttribute("login", "Vous devez d'abord vous connecter");
+            return "redirect:/";
+        }
+        
         model.addAttribute("serie", new Serie());
         model.addAttribute("media", new Media());
         model.addAttribute("categories", (Iterable<Category>) CategoryRepository.findAll());

@@ -80,6 +80,7 @@ public class UserController {
 		 * if(bindingResult.hasErrors()) { System.out.println("erreeeeur");
 		 * return "PAGE_ADD"; }
 		 */
+		
 		session.removeAttribute("msgerreuremail");
 		session.removeAttribute("msgerreurusername");
 		if (userRep.findByUsername(user.getUsername()) == null) {
